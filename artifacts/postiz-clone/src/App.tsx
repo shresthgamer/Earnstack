@@ -1,12 +1,32 @@
-import { useEffect } from "react";
+import { Component, type ReactNode } from "react";
 import { Switch, Route, Router as WouterRouter } from "wouter";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/not-found";
 import Landing from "@/pages/Landing";
 
-const queryClient = new QueryClient();
+class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
+  state = { error: null };
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+  render() {
+    if (this.state.error) {
+      return (
+        <div style={{ background: "#0e0e0e", color: "#ff4ce2", padding: 40, fontFamily: "monospace", minHeight: "100vh" }}>
+          <h2>Render Error</h2>
+          <pre style={{ color: "#ccc", whiteSpace: "pre-wrap" }}>{(this.state.error as Error).message}</pre>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function NotFound() {
+  return (
+    <div style={{ background: "#0e0e0e", color: "white", padding: 40, minHeight: "100vh" }}>
+      <h1>404 - Page Not Found</h1>
+    </div>
+  );
+}
 
 function Router() {
   return (
@@ -17,22 +37,12 @@ function Router() {
   );
 }
 
-function App() {
-  useEffect(() => {
-    // Force dark mode
-    document.documentElement.classList.add("dark");
-  }, []);
-
+export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <WouterRouter base={import.meta.env.BASE_URL?.replace(/\/$/, "") ?? ""}>
+        <Router />
+      </WouterRouter>
+    </ErrorBoundary>
   );
 }
-
-export default App;
