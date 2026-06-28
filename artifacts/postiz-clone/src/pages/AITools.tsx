@@ -1,10 +1,9 @@
 import { motion } from "framer-motion";
-import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
   Bot, Sparkles, FileText, Mail, Target, MessageSquare,
-  Image, BarChart2, Zap, BookOpen, ArrowRight, Play, Check, Home
+  Image, BarChart2, Zap, BookOpen, ArrowRight, Play, Check
 } from "lucide-react";
 
 const tools = [
@@ -89,38 +88,69 @@ const miniTools = [
   { icon: Bot, title: "AI Niche Finder", desc: "Enter your skills and AI suggests profitable creator niches." },
 ];
 
+// AI ticker data — live AI outputs (different from CreatorEarnings)
+const tickerItems = [
+  "🤖 Course generated for @priya.teaches — 6 modules in 4 min",
+  "⚡ Funnel built for @lukecreates — 3 pages, 62% opt-in rate",
+  "✉️ 7-email sequence written for @sarah.sells — ready to launch",
+  "🛒 Product checkout page drafted for @notionpro — $79 price set",
+  "💬 Chatbot live for @alexfit — 340 DMs handled today",
+  "📱 30-day content plan generated for @markscales — Instagram & TikTok",
+  "📊 Analytics report for @devkim — $8.2k earned this month",
+  "🎓 Quiz set of 48 questions created for @tomteaches — published",
+  "🤖 Course generated for @priya.teaches — 6 modules in 4 min",
+  "⚡ Funnel built for @lukecreates — 3 pages, 62% opt-in rate",
+  "✉️ 7-email sequence written for @sarah.sells — ready to launch",
+  "🛒 Product checkout page drafted for @notionpro — $79 price set",
+  "💬 Chatbot live for @alexfit — 340 DMs handled today",
+  "📱 30-day content plan generated for @markscales — Instagram & TikTok",
+  "📊 Analytics report for @devkim — $8.2k earned this month",
+  "🎓 Quiz set of 48 questions created for @tomteaches — published",
+];
+
+const containerVars = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } }
+};
+const itemVars = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+};
+
 export default function AITools() {
   return (
     <div className="min-h-screen bg-[#0E0E0E] text-white w-full overflow-x-hidden font-sans">
       <Navbar />
 
-      {/* Home button */}
-      <div className="max-w-7xl mx-auto px-6 pt-6">
-        <Link href="/">
-          <motion.button
-            whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-            className="flex items-center gap-2 text-sm text-gray-400 hover:text-white border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full transition-all"
-          >
-            <Home size={13} /> Back to Home
-          </motion.button>
-        </Link>
-      </div>
+      {/* Hero with decorative glows */}
+      <section className="relative pt-16 pb-16 px-6 text-center max-w-4xl mx-auto overflow-hidden">
+        {/* Glow orbs */}
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#22c55e]/8 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-10 left-10 text-[#22c55e] opacity-40 animate-pulse text-2xl select-none">✦</div>
+        <div className="absolute top-20 right-16 text-[#eab308] opacity-30 animate-pulse text-xl select-none">✦</div>
+        <div className="absolute bottom-10 left-24 text-gray-500 opacity-20 text-3xl select-none">✧</div>
 
-      {/* Hero */}
-      <section className="pt-12 pb-16 px-6 text-center max-w-4xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <div className="inline-flex items-center gap-2 border border-[#22c55e]/30 bg-[#22c55e]/5 px-4 py-1.5 rounded-full mb-6">
+        <motion.div
+          variants={containerVars}
+          initial="hidden"
+          animate="show"
+          className="relative z-10"
+        >
+          <motion.div variants={itemVars} className="inline-flex items-center gap-2 border border-[#22c55e]/30 bg-[#22c55e]/5 px-4 py-1.5 rounded-full mb-6">
             <Sparkles size={13} className="text-[#22c55e]" />
             <span className="text-xs text-[#22c55e] font-semibold uppercase tracking-widest">AI-Powered Tools</span>
-          </div>
-          <h1 className="text-5xl md:text-6xl font-display font-bold text-white leading-tight mb-6">
+          </motion.div>
+
+          <motion.h1 variants={itemVars} className="text-5xl md:text-6xl font-display font-bold text-white leading-tight mb-6">
             Your AI creative team,<br />
             <span className="text-[#22c55e]">always on.</span>
-          </h1>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-10">
+          </motion.h1>
+
+          <motion.p variants={itemVars} className="text-xl text-gray-400 max-w-2xl mx-auto mb-10">
             Six specialized AI tools that write, build, and sell for you — so you can focus on creating, not copy-pasting.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
+          </motion.p>
+
+          <motion.div variants={itemVars} className="flex flex-wrap gap-4 justify-center">
             <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
               className="bg-[#22c55e] text-black font-bold px-8 py-3.5 rounded-full text-base shadow-[0_0_24px_rgba(34,197,94,0.3)] hover:bg-[#16a34a] transition-colors flex items-center gap-2">
               Try AI Free <ArrowRight size={16} />
@@ -129,12 +159,23 @@ export default function AITools() {
               className="bg-white/10 text-white font-bold px-8 py-3.5 rounded-full text-base border border-white/10 hover:bg-white/20 transition-colors flex items-center gap-2">
               <Play size={14} /> Watch Demo
             </motion.button>
-          </div>
+          </motion.div>
         </motion.div>
       </section>
 
+      {/* Live AI output ticker — unique to this page */}
+      <div className="w-full border-y border-white/5 bg-[#0a0a0a] py-3 overflow-hidden mb-16">
+        <div className="flex animate-ticker" style={{ width: "max-content" }}>
+          {tickerItems.map((item, i) => (
+            <span key={i} className="text-xs text-gray-400 font-medium whitespace-nowrap px-8 border-r border-white/10 last:border-r-0">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Tool cards */}
-      <section className="py-8 px-6 max-w-7xl mx-auto space-y-20">
+      <section className="px-6 max-w-7xl mx-auto space-y-24 pb-12">
         {tools.map((tool, i) => {
           const Icon = tool.icon;
           const isEven = i % 2 === 0;
@@ -147,7 +188,6 @@ export default function AITools() {
               transition={{ duration: 0.6 }}
               className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-12 items-center`}
             >
-              {/* Text side */}
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: tool.color + "20" }}>
@@ -176,7 +216,6 @@ export default function AITools() {
                 </motion.button>
               </div>
 
-              {/* Demo chat mockup */}
               <div className="flex-1 w-full">
                 <div className="rounded-2xl border border-white/10 bg-[#141414] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
                   <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-[#0E0E0E]">
@@ -214,20 +253,15 @@ export default function AITools() {
                           {msg.role === "user" ? "U" : "AI"}
                         </div>
                         <div className={`flex-1 rounded-xl p-3 text-xs leading-relaxed ${
-                          msg.role === "user"
-                            ? "bg-white/10 text-white text-right"
-                            : "text-gray-200 border border-white/10"
+                          msg.role === "user" ? "bg-white/10 text-white text-right" : "text-gray-200 border border-white/10"
                         }`} style={msg.role === "ai" ? { background: tool.color + "10" } : {}}>
                           {msg.text}
                         </div>
                       </motion.div>
                     ))}
                     <div className="flex gap-2 mt-2">
-                      <input
-                        readOnly
-                        placeholder="Type your request..."
-                        className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-gray-500 focus:outline-none"
-                      />
+                      <input readOnly placeholder="Type your request..."
+                        className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-gray-500 focus:outline-none" />
                       <button className="px-3 py-2 rounded-xl text-black text-xs font-bold" style={{ background: tool.color }}>
                         <Zap size={12} />
                       </button>
@@ -267,15 +301,13 @@ export default function AITools() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 px-6 text-center">
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}>
+      <section className="py-16 px-6 text-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#22c55e]/5 pointer-events-none" />
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+          className="relative z-10">
           <Bot size={36} className="text-[#22c55e] mx-auto mb-4" />
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
-            Let AI do the heavy lifting
-          </h2>
-          <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">
-            Start free — all AI tools included on every plan.
-          </p>
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">Let AI do the heavy lifting</h2>
+          <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">Start free — all AI tools included on every plan.</p>
           <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             className="bg-[#22c55e] text-black font-bold px-10 py-4 rounded-full text-lg shadow-[0_0_30px_rgba(34,197,94,0.3)] hover:bg-[#16a34a] transition-colors">
             Start Using AI Free →

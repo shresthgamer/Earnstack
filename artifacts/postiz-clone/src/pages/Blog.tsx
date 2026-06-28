@@ -125,21 +125,43 @@ export default function Blog() {
     <div className="min-h-screen bg-[#0E0E0E] text-white w-full overflow-x-hidden font-sans">
       <Navbar />
 
-      {/* Hero */}
-      <section className="pt-20 pb-8 px-6 text-center max-w-3xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <span className="text-xs text-[#22c55e] uppercase tracking-widest font-semibold border border-[#22c55e]/30 px-3 py-1 rounded-full inline-block mb-6">
+      {/* Hero with decorative glows */}
+      <section className="relative pt-20 pb-8 px-6 text-center max-w-3xl mx-auto overflow-hidden">
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[580px] h-[240px] bg-[#22c55e]/7 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-8 right-6 text-[#22c55e] opacity-40 animate-pulse text-2xl select-none">✦</div>
+        <div className="absolute top-24 left-6 text-[#eab308] opacity-25 animate-pulse text-xl select-none">✦</div>
+        <div className="absolute bottom-2 right-16 text-gray-500 opacity-20 text-3xl select-none">✧</div>
+
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }}
+          className="relative z-10"
+        >
+          <motion.span
+            variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="text-xs text-[#22c55e] uppercase tracking-widest font-semibold border border-[#22c55e]/30 px-3 py-1 rounded-full inline-block mb-6"
+          >
             EarnStack Blog
-          </span>
-          <h1 className="text-5xl md:text-6xl font-display font-bold text-white leading-tight mb-4">
+          </motion.span>
+          <motion.h1
+            variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="text-5xl md:text-6xl font-display font-bold text-white leading-tight mb-4"
+          >
             Grow your creator<br />
             <span className="text-[#22c55e]">income, faster</span>
-          </h1>
-          <p className="text-xl text-gray-400 mb-8">
+          </motion.h1>
+          <motion.p
+            variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="text-xl text-gray-400 mb-8"
+          >
             Actionable guides, case studies, and strategies from creators who've done it.
-          </p>
+          </motion.p>
 
-          <div className="relative max-w-md mx-auto">
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
+            className="relative max-w-md mx-auto"
+          >
             <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
             <input
               type="text"
@@ -148,7 +170,7 @@ export default function Blog() {
               onChange={e => setSearch(e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-full py-3 pl-10 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#22c55e]/50 transition-colors"
             />
-          </div>
+          </motion.div>
         </motion.div>
       </section>
 

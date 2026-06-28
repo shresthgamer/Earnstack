@@ -128,21 +128,43 @@ export default function Pricing() {
     <div className="min-h-screen bg-[#0E0E0E] text-white w-full overflow-x-hidden font-sans">
       <Navbar />
 
-      {/* Hero */}
-      <section className="pt-20 pb-8 px-6 text-center max-w-3xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <span className="text-xs text-[#22c55e] uppercase tracking-widest font-semibold border border-[#22c55e]/30 px-3 py-1 rounded-full inline-block mb-6">
+      {/* Hero with decorative glows */}
+      <section className="relative pt-20 pb-8 px-6 text-center max-w-3xl mx-auto overflow-hidden">
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[600px] h-[260px] bg-[#22c55e]/7 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-6 right-4 text-[#22c55e] opacity-40 animate-pulse text-2xl select-none">✦</div>
+        <div className="absolute top-20 left-8 text-[#eab308] opacity-25 animate-pulse text-xl select-none">✦</div>
+        <div className="absolute bottom-4 right-20 text-gray-500 opacity-20 text-3xl select-none">✧</div>
+
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }}
+          className="relative z-10"
+        >
+          <motion.span
+            variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="text-xs text-[#22c55e] uppercase tracking-widest font-semibold border border-[#22c55e]/30 px-3 py-1 rounded-full inline-block mb-6"
+          >
             Simple Pricing
-          </span>
-          <h1 className="text-5xl md:text-6xl font-display font-bold text-white leading-tight mb-4">
+          </motion.span>
+          <motion.h1
+            variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="text-5xl md:text-6xl font-display font-bold text-white leading-tight mb-4"
+          >
             Start free.<br />Scale when ready.
-          </h1>
-          <p className="text-xl text-gray-400 mb-8">
+          </motion.h1>
+          <motion.p
+            variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="text-xl text-gray-400 mb-8"
+          >
             No hidden fees, no transaction cuts. Just tools that help you earn more.
-          </p>
+          </motion.p>
 
           {/* Toggle */}
-          <div className="flex items-center justify-center gap-4">
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
+            className="flex items-center justify-center gap-4"
+          >
             <span className={`text-sm font-medium ${!annual ? "text-white" : "text-gray-500"}`}>Monthly</span>
             <button
               onClick={() => setAnnual(!annual)}
@@ -153,7 +175,7 @@ export default function Pricing() {
             <span className={`text-sm font-medium ${annual ? "text-white" : "text-gray-500"}`}>
               Annual <span className="text-[#22c55e] font-bold">Save 35%</span>
             </span>
-          </div>
+          </motion.div>
         </motion.div>
       </section>
 
