@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "nF5Uk-WXrFkLvymEF-brq"
+uri = "file://earnstack.tar.gz"
+type = "unspecified"
+title = "EarnStack — Source Code (earnstack.tar.gz)"
