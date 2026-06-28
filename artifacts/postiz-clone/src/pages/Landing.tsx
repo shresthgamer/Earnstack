@@ -3,6 +3,7 @@ import TopBar from "@/components/TopBar";
 import Hero from "@/components/Hero";
 import ToggleSection from "@/components/ToggleSection";
 import AppPreview from "@/components/AppPreview";
+import CreatorEarnings from "@/components/CreatorEarnings";
 import AllTools from "@/components/AllTools";
 import PowerContent from "@/components/PowerContent";
 import SocialChannels from "@/components/SocialChannels";
@@ -21,6 +22,7 @@ export default function Landing() {
         <Hero />
         <ToggleSection />
         <AppPreview />
+        <CreatorEarnings />
         <AllTools />
         <PowerContent />
         <SocialChannels />

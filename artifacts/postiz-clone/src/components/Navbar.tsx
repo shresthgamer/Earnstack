@@ -14,9 +14,10 @@ export default function Navbar() {
 
         <nav className="hidden md:flex items-center gap-7">
           {[
+            { label: "Home", href: "/" },
             { label: "Features", href: "/features" },
+            { label: "AI Tools", href: "/ai-tools" },
             { label: "Pricing", href: "/pricing" },
-            { label: "Templates", href: "/templates" },
             { label: "Blog", href: "/blog" },
           ].map((item) => (
             <Link
@@ -28,16 +29,6 @@ export default function Navbar() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#22c55e] transition-all group-hover:w-full"></span>
             </Link>
           ))}
-
-          <div className="relative group flex items-center gap-1 cursor-pointer">
-            <span className="text-sm text-gray-300 group-hover:text-white transition-colors font-medium">AI Tools</span>
-            <ChevronDown size={14} className="text-gray-400 group-hover:text-white transition-colors" />
-          </div>
-
-          <div className="relative group flex items-center gap-1 cursor-pointer">
-            <span className="text-sm text-gray-300 group-hover:text-white transition-colors font-medium">Resources</span>
-            <ChevronDown size={14} className="text-gray-400 group-hover:text-white transition-colors" />
-          </div>
         </nav>
 
         <div className="flex items-center gap-4">
