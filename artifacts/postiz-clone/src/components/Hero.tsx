@@ -1,20 +1,17 @@
 import { motion } from "framer-motion";
-import { 
-  SiInstagram, SiYoutube, SiBuffer, SiDribbble,
-  SiReddit, SiTiktok, SiFacebook, SiPinterest, SiThreads, 
-  SiX, SiSlack, SiDiscord, SiMastodon,
-  SiMessenger, SiTelegram, SiVk, SiMedium, SiWordpress, 
-  SiKickstarter, SiTwitch 
+import {
+  SiStripe, SiPaypal, SiZoom, SiYoutube, SiZapier,
+  SiGoogleanalytics, SiGoogledrive, SiGooglecalendar,
+  SiMailchimp, SiShopify, SiWebflow, SiNotion,
+  SiAirtable, SiSlack
 } from "react-icons/si";
-import { Trophy, Linkedin } from "lucide-react";
+import { Star } from "lucide-react";
 
 const containerVars = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.15
-    }
+    transition: { staggerChildren: 0.15 }
   }
 };
 
@@ -24,53 +21,42 @@ const itemVars = {
 };
 
 const iconGrid1 = [
-  { Icon: SiInstagram, color: "#E4405F", name: "Instagram" },
+  { Icon: SiStripe, color: "#635BFF", name: "Stripe" },
+  { Icon: SiPaypal, color: "#003087", name: "PayPal", bg: "bg-[#009cde]/20" },
+  { Icon: SiZoom, color: "#2D8CFF", name: "Zoom" },
   { Icon: SiYoutube, color: "#FF0000", name: "YouTube" },
-  { Icon: SiBuffer, color: "#232427", name: "Buffer" },
-  { Icon: SiDribbble, color: "#EA4C89", name: "Dribbble" },
-  { Icon: Linkedin, color: "#0A66C2", name: "LinkedIn" },
-  { Icon: SiReddit, color: "#FF4500", name: "Reddit" },
-  { Icon: SiTiktok, color: "#000000", name: "TikTok", bg: "bg-white text-black" },
-  { Icon: SiFacebook, color: "#1877F2", name: "Facebook" },
-  { Icon: SiPinterest, color: "#BD081C", name: "Pinterest" },
-  { Icon: SiThreads, color: "#000000", name: "Threads", bg: "bg-white text-black" },
-  { Icon: SiX, color: "#000000", name: "X/Twitter", bg: "bg-white text-black" },
+  { Icon: SiZapier, color: "#FF4A00", name: "Zapier" },
+  { Icon: SiGoogleanalytics, color: "#F9AB00", name: "Google Analytics" },
+  { Icon: SiGoogledrive, color: "#4285F4", name: "Google Drive" },
+  { Icon: SiGooglecalendar, color: "#4285F4", name: "Google Calendar" },
+  { Icon: SiMailchimp, color: "#FFE01B", name: "Mailchimp", bg: "bg-[#FFE01B]/10" },
+  { Icon: SiShopify, color: "#96BF48", name: "Shopify" },
+  { Icon: SiWebflow, color: "#4353FF", name: "Webflow" },
+  { Icon: SiNotion, color: "#ffffff", name: "Notion" },
+  { Icon: SiAirtable, color: "#18BFFF", name: "Airtable" },
   { Icon: SiSlack, color: "#4A154B", name: "Slack" },
-  { Icon: SiDiscord, color: "#5865F2", name: "Discord" },
-  { Icon: SiMastodon, color: "#6364FF", name: "Mastodon" }
-];
-
-const iconGrid2 = [
-  { Icon: SiMessenger, color: "#00B2FF", name: "Messenger" },
-  { Icon: SiTelegram, color: "#26A5E4", name: "Telegram" },
-  { Icon: SiVk, color: "#4680C2", name: "VK" },
-  { Icon: SiMedium, color: "#000000", name: "Medium", bg: "bg-white text-black" },
-  { Icon: SiWordpress, color: "#21759B", name: "WordPress" },
-  { Icon: SiKickstarter, color: "#05CE78", name: "Kickstarter" },
-  { Icon: SiTwitch, color: "#9146FF", name: "Twitch" }
 ];
 
 export default function Hero() {
   return (
     <section className="relative w-full pt-24 pb-16 overflow-hidden flex flex-col items-center">
-      
-      {/* Decorative stars/shapes */}
-      <div className="absolute top-40 right-20 text-[#FF4CE2] opacity-50 animate-pulse text-2xl">✦</div>
-      <div className="absolute top-60 right-32 text-white opacity-30 animate-pulse text-xl">✦</div>
+
+      <div className="absolute top-40 right-20 text-[#22c55e] opacity-50 animate-pulse text-2xl">✦</div>
+      <div className="absolute top-60 right-32 text-[#eab308] opacity-30 animate-pulse text-xl">✦</div>
       <div className="absolute top-20 left-32 text-gray-500 opacity-30 text-3xl">✧</div>
 
-      <motion.div 
+      <motion.div
         variants={containerVars}
         initial="hidden"
         animate="show"
         className="max-w-5xl mx-auto px-6 flex flex-col items-center text-center z-10"
       >
-        
+
         {/* Badges */}
         <motion.div variants={itemVars} className="flex flex-wrap justify-center gap-4 mb-8">
-          {["Product of the day | 1st", "Product of the week | 1st", "Product of the month | 1st"].map((text) => (
-            <div key={text} className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-white/10 bg-white/5 text-xs text-white font-medium">
-              <Trophy size={14} className="text-[#FF4CE2]" />
+          {["#1 AI Creator Platform", "Trusted by 50,000+ Creators", "4.9★ Rating"].map((text) => (
+            <div key={text} className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-[#22c55e]/20 bg-[#22c55e]/5 text-xs text-[#22c55e] font-medium">
+              <Star size={12} className="text-[#eab308]" fill="#eab308" />
               {text}
             </div>
           ))}
@@ -78,54 +64,50 @@ export default function Hero() {
 
         {/* Headline */}
         <motion.h1 variants={itemVars} className="text-5xl md:text-7xl font-display font-bold text-white tracking-tight leading-[1.1] mb-6 max-w-4xl">
-          Run your social media on<br />
-          autopilot with <span className="relative inline-block">
-            AI agents
-            <svg className="absolute w-full h-3 -bottom-1 left-0 text-[#FF4CE2]" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
-              <path d="M0,8 C50,0 150,12 200,4" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+          Build, Sell & Scale Your<br />
+          Creator Business with{" "}
+          <span className="relative inline-block">
+            AI
+            <svg className="absolute w-full h-3 -bottom-1 left-0" viewBox="0 0 100 12" fill="none" preserveAspectRatio="none">
+              <path d="M0,8 C25,0 75,12 100,4" stroke="#22c55e" strokeWidth="3" strokeLinecap="round"/>
             </svg>
           </span>
         </motion.h1>
 
         {/* Subtext */}
-        <motion.p variants={itemVars} className="text-lg md:text-xl text-gray-400 max-w-[600px] mb-10 leading-relaxed">
-          Plan, generate, and schedule posts automatically to 30+ social media networks — then review and edit everything in a visual calendar.
-          <br/><br/>
-          Use any agent: OpenClaw / Hermes / Claude / ChatGPT / Codex / Cursor
+        <motion.p variants={itemVars} className="text-lg md:text-xl text-gray-400 max-w-[620px] mb-10 leading-relaxed">
+          Create digital products, online courses, memberships, AI funnels, websites, communities and marketing campaigns from one powerful platform.
         </motion.p>
 
-        {/* CTA */}
-        <motion.div variants={itemVars} className="mb-16">
-          <motion.button 
+        {/* CTAs */}
+        <motion.div variants={itemVars} className="flex flex-wrap gap-4 justify-center mb-16">
+          <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            className="bg-white text-black text-lg font-bold px-8 py-4 rounded-full hover:bg-gray-100 transition-colors shadow-[0_0_30px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2 mx-auto"
+            className="bg-[#22c55e] text-black text-lg font-bold px-8 py-4 rounded-full hover:bg-[#16a34a] transition-colors shadow-[0_0_30px_rgba(34,197,94,0.3)] flex items-center gap-2"
           >
-            Start a 7-day trial for $0 <span className="font-serif">»</span>
+            Start Free <span className="font-serif">»</span>
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="bg-white/10 text-white text-lg font-bold px-8 py-4 rounded-full hover:bg-white/20 transition-colors border border-white/10 flex items-center gap-2"
+          >
+            Book a Demo
           </motion.button>
         </motion.div>
 
-        {/* Icons Grid */}
+        {/* Integrations Grid */}
         <motion.div variants={itemVars} className="w-full max-w-4xl flex flex-col items-center gap-4">
+          <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">Integrates with your favourite tools</p>
           <div className="flex flex-wrap justify-center gap-3">
             {iconGrid1.map((item, i) => (
-              <div 
-                key={i} 
-                className={`w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:scale-110 transition-transform cursor-pointer group ${item.bg ? item.bg : 'bg-white/5 hover:bg-white/10'}`}
+              <div
+                key={i}
+                className={`w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:scale-110 transition-transform cursor-pointer ${item.bg ?? 'bg-white/5 hover:bg-white/10'}`}
                 title={item.name}
               >
-                <item.Icon className="text-xl" style={{ color: item.bg ? "black" : item.color }} />
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-wrap justify-center gap-3">
-            {iconGrid2.map((item, i) => (
-              <div 
-                key={i} 
-                className={`w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:scale-110 transition-transform cursor-pointer group ${item.bg ? item.bg : 'bg-white/5 hover:bg-white/10'}`}
-                title={item.name}
-              >
-                <item.Icon className="text-xl" style={{ color: item.bg ? "black" : item.color }} />
+                <item.Icon className="text-xl" style={{ color: item.color }} />
               </div>
             ))}
           </div>

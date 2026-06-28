@@ -13,7 +13,7 @@ import Footer from "@/components/Footer";
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-[#0E0E0E] text-white w-full overflow-x-hidden font-sans selection:bg-[#FF4CE2]/30 selection:text-white">
+    <div className="min-h-screen bg-[#0E0E0E] text-white w-full overflow-x-hidden font-sans selection:bg-[#22c55e]/30 selection:text-white">
       <TopBar />
       <Navbar />
 

@@ -1,24 +1,23 @@
-import { SiInstagram, SiYoutube, SiTiktok, SiFacebook, SiReddit } from "react-icons/si";
-import { Linkedin } from "lucide-react";
+import { DollarSign, TrendingUp, Users, BookOpen, Zap, Star } from "lucide-react";
 
 const row1 = [
-  { metric: "+5%", label: "Increase in followers", icon: Linkedin, iconColor: "#0A66C2", name: "Larry Williams" },
-  { metric: "+50%", label: "Increase in followers", icon: Linkedin, iconColor: "#0A66C2", name: "Paula Wright" },
-  { metric: "+3k", label: "Saved per month", icon: SiInstagram, iconColor: "#E4405F", name: "Gilbert Ward" },
-  { metric: "+20%", label: "Followers", icon: SiYoutube, iconColor: "#FF0000", name: "Sherry Porter" },
-  { metric: "+10%", label: "Grew following", icon: SiTiktok, iconColor: "#000000", name: "Raymond Harrison" },
-  { metric: "x2", label: "Boost in reach", icon: SiReddit, iconColor: "#FF4500", name: "Lisa Park" },
-  { metric: "+35%", label: "Engagement rate", icon: SiFacebook, iconColor: "#1877F2", name: "Tom Bradley" },
+  { metric: "$12k", label: "Earned in first month", icon: DollarSign, name: "Sarah Chen — Course Creator" },
+  { metric: "3.2x", label: "Revenue increase", icon: TrendingUp, name: "Marcus Wright — Coach" },
+  { metric: "4,800", label: "Students enrolled", icon: BookOpen, name: "Priya Patel — Educator" },
+  { metric: "$47k", label: "Course launch revenue", icon: DollarSign, name: "James Carter — YouTuber" },
+  { metric: "2.1k", label: "Community members", icon: Users, name: "Lisa Park — Designer" },
+  { metric: "+380%", label: "Email open rate boost", icon: Zap, name: "Tom Bradley — Freelancer" },
+  { metric: "4.9★", label: "Customer satisfaction", icon: Star, name: "Amy Rodriguez — Agency" },
 ];
 
 const row2 = [
-  { metric: "3x", label: "Increase in traffic", icon: SiInstagram, iconColor: "#E4405F", name: "Betty McGee" },
-  { metric: "3k", label: "Saved per month", icon: SiFacebook, iconColor: "#1877F2", name: "Jonathan Turner" },
-  { metric: "+3k", label: "Followers", icon: Linkedin, iconColor: "#0A66C2", name: "Frank Grant" },
-  { metric: "2k", label: "Saved per month", icon: SiReddit, iconColor: "#FF4500", name: "Bernice Wilson" },
-  { metric: "+10%", label: "Increase in impressions", icon: SiTiktok, iconColor: "#000000", name: "Joel Johnson" },
-  { metric: "+45%", label: "New subscribers", icon: SiYoutube, iconColor: "#FF0000", name: "Marie Chen" },
-  { metric: "+2x", label: "Content output", icon: SiInstagram, iconColor: "#E4405F", name: "Alex Torres" },
+  { metric: "$8,200", label: "Passive income/month", icon: DollarSign, name: "David Kim — Developer" },
+  { metric: "890", label: "Funnel conversions", icon: TrendingUp, name: "Maria Santos — Marketer" },
+  { metric: "$55k", label: "Product launch total", icon: DollarSign, name: "Robert Nash — Consultant" },
+  { metric: "1,400", label: "Members in community", icon: Users, name: "Beth Wilson — Nutritionist" },
+  { metric: "+210%", label: "Revenue in 90 days", icon: TrendingUp, name: "Joel Johnson — Podcaster" },
+  { metric: "6,200", label: "Email subscribers", icon: Zap, name: "Marie Chen — Writer" },
+  { metric: "$29k", label: "Membership revenue", icon: DollarSign, name: "Alex Torres — Fitness Coach" },
 ];
 
 type CardData = typeof row1[0];
@@ -27,7 +26,7 @@ function ReviewCard({ card, gradient }: { card: CardData; gradient: string }) {
   const IconComp = card.icon;
   return (
     <div
-      className="flex-shrink-0 rounded-2xl p-5 flex flex-col justify-between w-52 h-36 select-none"
+      className="flex-shrink-0 rounded-2xl p-5 flex flex-col justify-between w-56 h-40 select-none"
       style={{ background: gradient }}
     >
       <div>
@@ -35,11 +34,8 @@ function ReviewCard({ card, gradient }: { card: CardData; gradient: string }) {
         <div className="text-sm text-white/80 font-medium">{card.label}</div>
       </div>
       <div className="flex items-center gap-2 mt-2">
-        <div
-          className="w-6 h-6 rounded-md flex items-center justify-center text-white"
-          style={{ backgroundColor: card.icon === SiTiktok ? "#000" : card.iconColor }}
-        >
-          <IconComp size={14} style={{ color: card.icon === SiTiktok ? "white" : "white" }} />
+        <div className="w-6 h-6 rounded-md flex items-center justify-center bg-white/20">
+          <IconComp size={14} style={{ color: "white" }} />
         </div>
         <span className="text-xs text-white/70 font-medium">{card.name}</span>
       </div>
@@ -48,23 +44,23 @@ function ReviewCard({ card, gradient }: { card: CardData; gradient: string }) {
 }
 
 const gradients1 = [
-  "linear-gradient(135deg, #6D28D9, #4C1D95)",
-  "linear-gradient(135deg, #7C3AED, #6D28D9)",
-  "linear-gradient(135deg, #5B21B6, #4C1D95)",
-  "linear-gradient(135deg, #6D28D9, #7C3AED)",
-  "linear-gradient(135deg, #4C1D95, #5B21B6)",
-  "linear-gradient(135deg, #7C3AED, #5B21B6)",
-  "linear-gradient(135deg, #6D28D9, #4C1D95)",
+  "linear-gradient(135deg, #14532d, #166534)",
+  "linear-gradient(135deg, #16a34a, #15803d)",
+  "linear-gradient(135deg, #15803d, #166534)",
+  "linear-gradient(135deg, #22c55e, #16a34a)",
+  "linear-gradient(135deg, #14532d, #15803d)",
+  "linear-gradient(135deg, #166534, #15803d)",
+  "linear-gradient(135deg, #15803d, #14532d)",
 ];
 
 const gradients2 = [
-  "linear-gradient(135deg, #BE185D, #9D174D)",
-  "linear-gradient(135deg, #DB2777, #BE185D)",
-  "linear-gradient(135deg, #9D174D, #831843)",
-  "linear-gradient(135deg, #EC4899, #DB2777)",
-  "linear-gradient(135deg, #BE185D, #DB2777)",
-  "linear-gradient(135deg, #9D174D, #BE185D)",
-  "linear-gradient(135deg, #DB2777, #9D174D)",
+  "linear-gradient(135deg, #713f12, #92400e)",
+  "linear-gradient(135deg, #a16207, #854d0e)",
+  "linear-gradient(135deg, #92400e, #78350f)",
+  "linear-gradient(135deg, #ca8a04, #a16207)",
+  "linear-gradient(135deg, #854d0e, #a16207)",
+  "linear-gradient(135deg, #78350f, #92400e)",
+  "linear-gradient(135deg, #a16207, #78350f)",
 ];
 
 export default function MarqueeReviews() {
@@ -75,8 +71,9 @@ export default function MarqueeReviews() {
     <section className="py-24 w-full overflow-hidden">
       <div className="text-center mb-14 px-6">
         <h2 className="text-3xl md:text-5xl font-display font-bold text-white">
-          Trusted by customers all over the world
+          Creators around the world are earning more
         </h2>
+        <p className="text-gray-400 mt-4 text-sm">Real results from real creators using EarnStack</p>
       </div>
 
       <style>{`
@@ -100,7 +97,6 @@ export default function MarqueeReviews() {
         }
       `}</style>
 
-      {/* Row 1 — scrolls left */}
       <div className="relative mb-4">
         <div className="flex gap-4 marquee-left" style={{ width: "max-content" }}>
           {doubled1.map((card, i) => (
@@ -109,7 +105,6 @@ export default function MarqueeReviews() {
         </div>
       </div>
 
-      {/* Row 2 — scrolls right */}
       <div className="relative">
         <div className="flex gap-4 marquee-right" style={{ width: "max-content" }}>
           {doubled2.map((card, i) => (

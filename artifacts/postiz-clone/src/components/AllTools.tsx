@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Calendar, Bot, Image as ImageIcon } from "lucide-react";
+import { Bot, ShoppingBag, Users } from "lucide-react";
 
 export default function AllTools() {
   return (
@@ -12,147 +12,132 @@ export default function AllTools() {
         className="text-center mb-14"
       >
         <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-3 leading-tight">
-          All the tools required for social<br />media growth in one place
+          Every tool a creator needs<br />to build & grow income
         </h2>
         <svg viewBox="0 0 200 12" fill="none" className="w-48 mx-auto mt-2">
-          <path d="M0,8 C50,0 150,12 200,4" stroke="#FF4CE2" strokeWidth="3" strokeLinecap="round" />
+          <path d="M0,8 C50,0 150,12 200,4" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" />
         </svg>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Planning / Seamless scheduling */}
+        {/* Digital Product Store */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
           className="rounded-3xl p-8 overflow-hidden"
-          style={{ background: "linear-gradient(145deg, #5b21b6, #3b0764)" }}
+          style={{ background: "linear-gradient(145deg, #14532d, #052e16)" }}
         >
-          <span className="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-5 tracking-widest">PLANNING</span>
-          <h3 className="text-2xl font-display font-bold text-white mb-3">Seamless scheduling</h3>
-          <p className="text-sm text-white/70 mb-6 leading-relaxed">Schedule, analyze, and engage with your audience. Cross post your social media posts into multiple channels.</p>
+          <span className="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-5 tracking-widest">DIGITAL PRODUCTS</span>
+          <h3 className="text-2xl font-display font-bold text-white mb-3">Creator Store & Checkout</h3>
+          <p className="text-sm text-white/70 mb-6 leading-relaxed">Launch your digital product store in minutes. Sell ebooks, templates, presets, courses, and more — with built-in checkout and instant payouts.</p>
 
-          {/* Calendar UI mockup */}
           <div className="rounded-2xl bg-black/30 border border-white/10 overflow-hidden">
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-              <span className="text-xs font-bold text-white">Channel</span>
-              <div className="flex items-center gap-2 text-xs text-white/60">
-                <span>‹</span><span>Feb 11</span><span>17</span><span>›</span>
-              </div>
-              <div className="flex gap-1 text-xs text-white/40">
-                <span>Mon</span><span className="ml-3">Tue</span><span className="ml-3">Wed</span><span className="ml-3">Thu</span>
-              </div>
+              <span className="text-xs font-bold text-white">My Products</span>
+              <button className="text-xs bg-[#22c55e] text-black font-bold px-3 py-1 rounded-lg">+ Add Product</button>
             </div>
             <div className="p-4 space-y-3">
               {[
-                { name: "Daniel Hamilton", color: "#0A66C2", time: "1:00 PM" },
-                { name: "Daniel Hamilton", color: "#1877F2", time: "1:00 PM" },
-                { name: "HamiltonJan", color: "#0A66C2", time: "" },
+                { name: "Ultimate Notion Template Pack", price: "$47", sales: "342 sales", color: "#22c55e" },
+                { name: "Freelancer Business Kit", price: "$97", sales: "128 sales", color: "#eab308" },
+                { name: "Social Media Masterclass", price: "$197", sales: "89 sales", color: "#3b82f6" },
               ].map((row, i) => (
                 <div key={i} className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style={{ background: row.color }}>
-                    {row.name[0]}
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ background: row.color + "30" }}>
+                    <ShoppingBag size={12} style={{ color: row.color }} />
                   </div>
                   <span className="text-xs text-white/70 flex-1">{row.name}</span>
-                  {row.time && <span className="text-xs bg-[#FF4CE2]/30 text-[#FF4CE2] px-2 py-0.5 rounded font-bold">{row.time}</span>}
+                  <span className="text-xs font-bold text-[#22c55e]">{row.price}</span>
+                  <span className="text-xs text-white/40">{row.sales}</span>
                 </div>
               ))}
               <div className="flex items-center gap-2 mt-2">
-                <button className="text-xs bg-[#FF4CE2] text-white px-3 py-1 rounded-lg flex items-center gap-1"><span>+</span> New Channel</button>
-                <button className="text-xs bg-white/10 text-white px-3 py-1 rounded-lg flex items-center gap-1"><Bot size={10} /> Generate Posts</button>
+                <button className="text-xs bg-[#22c55e] text-black px-3 py-1 rounded-lg flex items-center gap-1 font-bold"><Bot size={10} /> AI Generate Product</button>
               </div>
             </div>
-            {/* Time indicator */}
             <div className="mx-4 mb-4">
-              <div className="bg-gradient-to-r from-[#FF4CE2] to-[#7C3AED] rounded-xl p-2 flex items-center gap-2">
-                <span className="text-white font-bold text-sm">2:50 PM ♦</span>
-                <div className="ml-auto">
-                  <div className="w-8 h-8 rounded-full bg-white/20" />
-                </div>
+              <div className="bg-gradient-to-r from-[#22c55e] to-[#16a34a] rounded-xl p-2 flex items-center gap-2">
+                <span className="text-black font-bold text-sm">$4,820 earned this month 🚀</span>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* AI Content assistant */}
+        {/* AI Course Builder */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="rounded-3xl p-8 overflow-hidden"
-          style={{ background: "linear-gradient(145deg, #3730a3, #1e1b4b)" }}
+          style={{ background: "linear-gradient(145deg, #1a3a1a, #0a1a0a)" }}
         >
-          {/* Avatar stack */}
           <div className="flex mb-5">
-            {["#e74c3c", "#3498db", "#2ecc71", "#f39c12"].map((color, i) => (
-              <div key={i} className="w-8 h-8 rounded-full border-2 border-[#3730a3] -ml-2 first:ml-0" style={{ background: color }} />
+            {["#22c55e", "#eab308", "#3b82f6", "#f97316"].map((color, i) => (
+              <div key={i} className="w-8 h-8 rounded-full border-2 border-[#1a3a1a] -ml-2 first:ml-0" style={{ background: color }} />
             ))}
+            <span className="ml-3 text-xs text-white/50 self-center">12,400+ enrolled students</span>
           </div>
 
-          {/* AI Chat mockup */}
           <div className="rounded-2xl bg-black/30 border border-white/10 overflow-hidden mb-5">
             <div className="p-3 space-y-3">
-              <div className="bg-[#FF4CE2]/20 border border-[#FF4CE2]/30 rounded-xl p-3 flex items-start gap-2">
-                <Bot size={14} className="text-[#FF4CE2] mt-0.5 flex-shrink-0" />
-                <span className="text-xs text-[#FF4CE2] font-medium">AI Content Assistant</span>
+              <div className="bg-[#22c55e]/20 border border-[#22c55e]/30 rounded-xl p-3 flex items-start gap-2">
+                <Bot size={14} className="text-[#22c55e] mt-0.5 flex-shrink-0" />
+                <span className="text-xs text-[#22c55e] font-medium">AI Course Generator</span>
               </div>
               <div className="bg-white/5 rounded-xl p-3 text-xs text-white/70 leading-relaxed">
-                Hi! I'm your AI assistant — I can help with any plan for you. What do you want to say and where do you want to post it?
+                I can generate a full course outline, lesson scripts, quizzes, and landing page for you. What topic do you want to teach?
               </div>
               <div className="bg-white/5 rounded-xl p-3 text-xs text-white/70">
-                Create post about time management
+                Create a 6-week freelancing course for designers
               </div>
-              <button className="w-full bg-[#FF4CE2] text-white text-xs font-bold py-2 rounded-xl">
-                Let's start →
+              <button className="w-full bg-[#22c55e] text-black text-xs font-bold py-2 rounded-xl">
+                Generate my course →
               </button>
             </div>
           </div>
 
-          <span className="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-5 tracking-widest">ARTIFICIAL INTELLIGENCE</span>
-          <h3 className="text-2xl font-display font-bold text-white mb-3">AI Content assistant</h3>
-          <p className="text-sm text-white/70 leading-relaxed">Improve your content creation process with Ai Agent that performs all tasks for you.</p>
+          <span className="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-5 tracking-widest">AI COURSE BUILDER</span>
+          <h3 className="text-2xl font-display font-bold text-white mb-3">Build & Sell Online Courses</h3>
+          <p className="text-sm text-white/70 leading-relaxed">AI generates your curriculum, lessons, and sales page. You record, we host it — and payments go straight to you.</p>
         </motion.div>
 
-        {/* Design it with AI — full width */}
+        {/* Community Builder — full width */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="rounded-3xl p-8 overflow-hidden md:col-span-2"
-          style={{ background: "linear-gradient(145deg, #4c1d95, #2d1462)" }}
+          style={{ background: "linear-gradient(145deg, #1a3a14, #0f2008)" }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
-              <span className="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-5 tracking-widest">AI IMAGE</span>
-              <h3 className="text-2xl font-display font-bold text-white mb-3">Design it with AI</h3>
-              <p className="text-sm text-white/70 leading-relaxed">Use a Canva-like tool to create stunning visuals for your social media posts and generate pictures with AI.</p>
+              <span className="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-5 tracking-widest">COMMUNITY</span>
+              <h3 className="text-2xl font-display font-bold text-white mb-3">Build Membership Communities</h3>
+              <p className="text-sm text-white/70 leading-relaxed">Create a paid community where members get exclusive content, live sessions, and direct access to you. Charge monthly or annually.</p>
             </div>
-            {/* Design Media mockup */}
             <div className="rounded-2xl bg-black/30 border border-white/10 overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-                <span className="text-sm font-bold text-white">Design Media</span>
-                <button className="bg-[#FF4CE2] text-white text-xs font-bold px-3 py-1 rounded-lg">Use this media</button>
+                <span className="text-sm font-bold text-white flex items-center gap-2"><Users size={14} className="text-[#22c55e]" /> Creator Circle</span>
+                <button className="bg-[#22c55e] text-black text-xs font-bold px-3 py-1 rounded-lg">Join Community</button>
               </div>
               <div className="p-4">
-                <div className="flex items-center gap-2 bg-white/5 rounded-lg px-3 py-2 mb-3 border border-white/10">
-                  <ImageIcon size={14} className="text-white/40" />
-                  <span className="text-xs text-white/40">Search...</span>
-                </div>
-                <div className="text-xs text-white/50 mb-3">Photos from Unsplash</div>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="space-y-3">
                   {[
-                    { bg: "#4a5568", label: "Photo" },
-                    { bg: "#718096", label: "Photo" },
-                    { bg: "#2d3748", label: "1:03" },
-                    { bg: "#553c9a", label: "Photo" },
-                    { bg: "#6b46c1", label: "Photo" },
-                    { bg: "#322659", label: "Photo" },
-                  ].map((item, i) => (
-                    <div key={i} className="aspect-square rounded-lg flex items-end justify-end p-1 text-[10px] text-white/60 font-medium" style={{ background: item.bg }}>
-                      {item.label !== "Photo" && item.label}
+                    { name: "Sarah K.", msg: "Just closed my first $5k client 🎉", time: "2m" },
+                    { name: "Mike R.", msg: "The funnel template worked perfectly!", time: "8m" },
+                    { name: "Priya L.", msg: "Hit $10k MRR this month!", time: "15m" },
+                  ].map((m, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <div className="w-6 h-6 rounded-full bg-[#22c55e]/30 flex items-center justify-center text-[10px] font-bold text-[#22c55e] shrink-0">{m.name[0]}</div>
+                      <div className="flex-1">
+                        <span className="text-xs font-bold text-white">{m.name}</span>
+                        <p className="text-xs text-white/60">{m.msg}</p>
+                      </div>
+                      <span className="text-xs text-white/30">{m.time}</span>
                     </div>
                   ))}
                 </div>

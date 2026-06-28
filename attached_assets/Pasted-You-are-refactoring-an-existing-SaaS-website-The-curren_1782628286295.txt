@@ -1,0 +1,388 @@
+You are refactoring an existing SaaS website.
+
+The current project was originally built as a Social Media Automation platform similar to Postiz.
+
+Your task is NOT to redesign the UI from scratch.
+
+Instead, completely transform every part of the website into EarnStack.
+
+Keep the existing design system, animations, responsive layout, components, and code quality, but replace all branding, text, icons, navigation, features, CTAs, pages, metadata, dashboards, pricing, and content.
+
+====================================================
+
+NEW BRAND
+
+Platform Name:
+EarnStack
+
+Tagline:
+Turn Your Skills Into Income.
+
+Mission:
+EarnStack is the all-in-one AI Creator Monetization Platform that helps creators build, launch, market, automate, and grow their digital business from one dashboard.
+
+====================================================
+
+REPLACE ALL REFERENCES
+
+Remove every reference to:
+
+* Social Media Automation
+* Social Scheduling
+* AI Social Assistant
+* Post Scheduling
+* Threads Scheduler
+* Twitter Scheduler
+* Instagram Scheduler
+* LinkedIn Scheduler
+* Facebook Scheduler
+* TikTok Scheduler
+* Pinterest Scheduler
+* Mastodon
+* Bluesky
+* Social Inbox
+* Social Calendar
+* Social Posting
+* Analytics related only to social media
+
+Replace them with creator monetization features.
+
+====================================================
+
+PRIMARY FEATURES
+
+Replace the feature list with:
+
+• Digital Product Builder
+• Course Builder
+• Membership Builder
+• Funnel Builder
+• AI Website Builder
+• AI Landing Page Builder
+• Checkout Pages
+• Payment Links
+• Creator Store
+• Link in Bio
+• Community Builder
+• Affiliate Program
+• CRM
+• Email Marketing
+• Automation Workflows
+• Auto DM Automation
+• AI Chatbot Builder
+• AI Calling Agent Builder
+• AI Product Generator
+• AI Course Generator
+• AI Funnel Generator
+• AI Sales Copy Generator
+• AI Email Writer
+• AI Blog Writer
+• AI Ad Generator
+• AI Thumbnail Generator
+• AI Video Generator
+• Analytics Dashboard
+
+====================================================
+
+NAVIGATION
+
+Replace navigation with:
+
+Home
+
+Features
+
+Products
+
+Courses
+
+Memberships
+
+Funnels
+
+AI Tools
+
+Pricing
+
+Templates
+
+Resources
+
+Documentation
+
+Login
+
+Start Free
+
+====================================================
+
+HERO SECTION
+
+Headline:
+
+Build, Sell & Scale Your Creator Business with AI.
+
+Subheadline:
+
+Create digital products, online courses, memberships, AI funnels, websites, communities and marketing campaigns from one powerful platform.
+
+CTA Buttons
+
+Start Free
+
+Book Demo
+
+Dashboard Preview
+
+====================================================
+
+WHY EARNSTACK
+
+Replace all sections with creator-focused content.
+
+Examples:
+
+Create Digital Products
+
+Launch Online Courses
+
+Build Membership Communities
+
+Create High-Converting Funnels
+
+AI Creates Your Business Assets
+
+Automate Customer Journeys
+
+Grow Your Audience
+
+Increase Revenue
+
+====================================================
+
+AI FEATURES
+
+Create a dedicated AI section.
+
+Include:
+
+AI Product Generator
+
+AI Course Generator
+
+AI Website Generator
+
+AI Funnel Generator
+
+AI Email Generator
+
+AI Landing Page Generator
+
+AI Sales Copy Generator
+
+AI Ads Generator
+
+AI Chatbot Builder
+
+AI Calling Agent Builder
+
+AI Video Generator
+
+AI Image Generator
+
+AI Content Generator
+
+====================================================
+
+CREATOR TOOLS
+
+Add sections for:
+
+Digital Products
+
+Courses
+
+Memberships
+
+Community
+
+Funnels
+
+Checkout
+
+CRM
+
+Affiliate Program
+
+Email Marketing
+
+Booking
+
+Automation
+
+Analytics
+
+====================================================
+
+INTEGRATIONS
+
+Replace social integrations with creator business integrations.
+
+Display integrations such as:
+
+Stripe
+
+Razorpay
+
+PayPal
+
+Google Drive
+
+Google Calendar
+
+Zoom
+
+YouTube
+
+Google Analytics
+
+Zapier
+
+Webhooks
+
+====================================================
+
+PRICING
+
+Update pricing to EarnStack branding.
+
+Example plans:
+
+Starter
+
+Creator
+
+Pro
+
+Business
+
+Enterprise
+
+Highlight AI features in higher plans.
+
+====================================================
+
+TESTIMONIALS
+
+Replace testimonials with creator success stories.
+
+Examples:
+
+Course Creator
+
+Coach
+
+Freelancer
+
+Agency Owner
+
+YouTuber
+
+Designer
+
+Developer
+
+Digital Product Seller
+
+====================================================
+
+FAQ
+
+Rewrite every FAQ for EarnStack.
+
+Topics:
+
+Digital products
+
+Courses
+
+Memberships
+
+Funnels
+
+AI
+
+Payments
+
+Creator tools
+
+Automation
+
+Pricing
+
+====================================================
+
+FOOTER
+
+Replace footer with:
+
+Products
+
+Courses
+
+Funnels
+
+Memberships
+
+AI Tools
+
+Pricing
+
+Templates
+
+Documentation
+
+Blog
+
+Help Center
+
+API
+
+Careers
+
+Privacy Policy
+
+Terms
+
+Contact
+
+====================================================
+
+SEO
+
+Replace all metadata.
+
+Title:
+
+EarnStack — AI Creator Monetization Platform
+
+Description:
+
+Build websites, funnels, digital products, courses, memberships, communities and AI marketing tools from one platform.
+
+====================================================
+
+VISUALS
+
+Replace icons, illustrations and screenshots that represent social media scheduling with creator business dashboards, product management, funnels, AI assistants, sales analytics, and online course interfaces.
+
+====================================================
+
+QUALITY REQUIREMENTS
+
+* Preserve animations and UI quality.
+* Remove all remaining social media automation terminology.
+* Rename components, routes, variables, API names, and page titles where appropriate.
+* Ensure the application feels like it was originally designed as EarnStack.
+* Do not leave placeholder text or old branding anywhere in the codebase.
+* Produce a polished, premium SaaS experience suitable for a modern AI creator platform.
