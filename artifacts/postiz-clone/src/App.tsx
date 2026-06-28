@@ -1,6 +1,10 @@
 import { Component, type ReactNode } from "react";
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import Landing from "@/pages/Landing";
+import Features from "@/pages/Features";
+import Pricing from "@/pages/Pricing";
+import Templates from "@/pages/Templates";
+import Blog from "@/pages/Blog";
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
   state = { error: null };
@@ -32,6 +36,10 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Landing} />
+      <Route path="/features" component={Features} />
+      <Route path="/pricing" component={Pricing} />
+      <Route path="/templates" component={Templates} />
+      <Route path="/blog" component={Blog} />
       <Route component={NotFound} />
     </Switch>
   );

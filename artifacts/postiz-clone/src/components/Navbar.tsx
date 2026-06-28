@@ -13,13 +13,18 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-7">
-          {["Features", "Pricing", "Templates", "Blog"].map((item) => (
+          {[
+            { label: "Features", href: "/features" },
+            { label: "Pricing", href: "/pricing" },
+            { label: "Templates", href: "/templates" },
+            { label: "Blog", href: "/blog" },
+          ].map((item) => (
             <Link
-              key={item}
-              href="#"
+              key={item.label}
+              href={item.href}
               className="text-sm text-gray-300 hover:text-white transition-colors relative group font-medium"
             >
-              {item}
+              {item.label}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#22c55e] transition-all group-hover:w-full"></span>
             </Link>
           ))}
