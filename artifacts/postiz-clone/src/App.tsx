@@ -1,17 +1,35 @@
-import { Component, type ReactNode } from "react";
+import { Component, Suspense, lazy, type ReactNode } from "react";
 import { Switch, Route, Router as WouterRouter } from "wouter";
-import Landing from "@/pages/Landing";
-import Features from "@/pages/Features";
-import Pricing from "@/pages/Pricing";
-import Blog from "@/pages/Blog";
-import BlogPost from "@/pages/BlogPost";
-import AITools from "@/pages/AITools";
+
+// Lazy-load every page so each route is its own JS chunk
+const Landing  = lazy(() => import("@/pages/Landing"));
+const Features = lazy(() => import("@/pages/Features"));
+const Pricing  = lazy(() => import("@/pages/Pricing"));
+const Blog     = lazy(() => import("@/pages/Blog"));
+const BlogPost = lazy(() => import("@/pages/BlogPost"));
+const AITools  = lazy(() => import("@/pages/AITools"));
+
+function PageLoader() {
+  return (
+    <div className="min-h-screen bg-[#0E0E0E] flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-10 h-10 rounded-xl bg-[#22c55e] flex items-center justify-center animate-pulse">
+          <span className="text-black font-bold text-lg font-display">E</span>
+        </div>
+        <div className="flex gap-1.5">
+          {[0,1,2].map(i => (
+            <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#22c55e]/60 animate-bounce"
+              style={{ animationDelay: `${i * 0.15}s` }} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
   state = { error: null };
-  static getDerivedStateFromError(error: Error) {
-    return { error };
-  }
+  static getDerivedStateFromError(error: Error) { return { error }; }
   render() {
     if (this.state.error) {
       return (
@@ -35,15 +53,17 @@ function NotFound() {
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={Landing} />
-      <Route path="/features" component={Features} />
-      <Route path="/pricing" component={Pricing} />
-      <Route path="/blog" component={Blog} />
-      <Route path="/blog/:id" component={BlogPost} />
-      <Route path="/ai-tools" component={AITools} />
-      <Route component={NotFound} />
-    </Switch>
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        <Route path="/"         component={Landing} />
+        <Route path="/features" component={Features} />
+        <Route path="/pricing"  component={Pricing} />
+        <Route path="/blog"     component={Blog} />
+        <Route path="/blog/:id" component={BlogPost} />
+        <Route path="/ai-tools" component={AITools} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 
