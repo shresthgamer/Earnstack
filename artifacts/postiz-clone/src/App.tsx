@@ -4,6 +4,7 @@ import Landing from "@/pages/Landing";
 import Features from "@/pages/Features";
 import Pricing from "@/pages/Pricing";
 import Blog from "@/pages/Blog";
+import BlogPost from "@/pages/BlogPost";
 import AITools from "@/pages/AITools";
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
@@ -39,6 +40,7 @@ function Router() {
       <Route path="/features" component={Features} />
       <Route path="/pricing" component={Pricing} />
       <Route path="/blog" component={Blog} />
+      <Route path="/blog/:id" component={BlogPost} />
       <Route path="/ai-tools" component={AITools} />
       <Route component={NotFound} />
     </Switch>

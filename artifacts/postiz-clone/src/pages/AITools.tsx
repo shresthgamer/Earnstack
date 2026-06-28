@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
@@ -151,10 +152,12 @@ export default function AITools() {
           </motion.p>
 
           <motion.div variants={itemVars} className="flex flex-wrap gap-4 justify-center">
-            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-              className="bg-[#22c55e] text-black font-bold px-8 py-3.5 rounded-full text-base shadow-[0_0_24px_rgba(34,197,94,0.3)] hover:bg-[#16a34a] transition-colors flex items-center gap-2">
-              Try AI Free <ArrowRight size={16} />
-            </motion.button>
+            <Link href="/pricing">
+              <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
+                className="bg-[#22c55e] text-black font-bold px-8 py-3.5 rounded-full text-base shadow-[0_0_24px_rgba(34,197,94,0.3)] hover:bg-[#16a34a] transition-colors flex items-center gap-2">
+                Try AI Free <ArrowRight size={16} />
+              </motion.button>
+            </Link>
             <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
               className="bg-white/10 text-white font-bold px-8 py-3.5 rounded-full text-base border border-white/10 hover:bg-white/20 transition-colors flex items-center gap-2">
               <Play size={14} /> Watch Demo
@@ -308,10 +311,12 @@ export default function AITools() {
           <Bot size={36} className="text-[#22c55e] mx-auto mb-4" />
           <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">Let AI do the heavy lifting</h2>
           <p className="text-gray-400 text-lg mb-8 max-w-xl mx-auto">Start free — all AI tools included on every plan.</p>
-          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-            className="bg-[#22c55e] text-black font-bold px-10 py-4 rounded-full text-lg shadow-[0_0_30px_rgba(34,197,94,0.3)] hover:bg-[#16a34a] transition-colors">
-            Start Using AI Free →
-          </motion.button>
+          <Link href="/pricing">
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+              className="bg-[#22c55e] text-black font-bold px-10 py-4 rounded-full text-lg shadow-[0_0_30px_rgba(34,197,94,0.3)] hover:bg-[#16a34a] transition-colors">
+              Start Using AI Free →
+            </motion.button>
+          </Link>
           <p className="text-gray-600 text-sm mt-4">No credit card · Cancel anytime</p>
         </motion.div>
       </section>

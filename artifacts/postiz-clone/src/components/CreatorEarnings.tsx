@@ -23,19 +23,21 @@ function GreenCard({ stat, label, creator, role, Icon }: typeof row1[0]) {
   return (
     <div
       className="flex-shrink-0 w-52 rounded-2xl p-5 flex flex-col justify-between mx-2"
-      style={{ background: "linear-gradient(145deg, #16532d, #0f3d1f)", minHeight: 160 }}
+      style={{
+        background: "linear-gradient(145deg, #166534 0%, #14532d 60%, #0f3320 100%)",
+        border: "1px solid rgba(34,197,94,0.18)",
+        minHeight: 165,
+      }}
     >
       <div>
         <p className="text-3xl font-display font-bold text-white leading-none mb-1">{stat}</p>
-        <p className="text-sm text-green-200/80">{label}</p>
+        <p className="text-sm text-green-200/75">{label}</p>
       </div>
       <div className="flex items-center gap-2 mt-4">
-        <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-          <Icon size={11} className="text-green-300" />
+        <div className="w-6 h-6 rounded-full bg-[#22c55e]/20 flex items-center justify-center shrink-0">
+          <Icon size={11} className="text-[#4ade80]" />
         </div>
-        <span className="text-xs text-green-100/70 leading-tight">
-          {creator} — {role}
-        </span>
+        <span className="text-xs text-green-100/65 leading-tight">{creator} — {role}</span>
       </div>
     </div>
   );
@@ -45,26 +47,29 @@ function AmberCard({ stat, label, creator, role, Icon }: typeof row2[0]) {
   return (
     <div
       className="flex-shrink-0 w-52 rounded-2xl p-5 flex flex-col justify-between mx-2"
-      style={{ background: "linear-gradient(145deg, #92400e, #6b2d0a)", minHeight: 160 }}
+      style={{
+        background: "linear-gradient(145deg, #b45309 0%, #92400e 60%, #78350f 100%)",
+        border: "1px solid rgba(234,179,8,0.18)",
+        minHeight: 165,
+      }}
     >
       <div>
         <p className="text-3xl font-display font-bold text-white leading-none mb-1">{stat}</p>
-        <p className="text-sm text-amber-200/80">{label}</p>
+        <p className="text-sm text-amber-200/75">{label}</p>
       </div>
       <div className="flex items-center gap-2 mt-4">
-        <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-          <Icon size={11} className="text-amber-300" />
+        <div className="w-6 h-6 rounded-full bg-[#f59e0b]/20 flex items-center justify-center shrink-0">
+          <Icon size={11} className="text-[#fbbf24]" />
         </div>
-        <span className="text-xs text-amber-100/70 leading-tight">
-          {creator} — {role}
-        </span>
+        <span className="text-xs text-amber-100/65 leading-tight">{creator} — {role}</span>
       </div>
     </div>
   );
 }
 
-const doubled1 = [...row1, ...row1];
-const doubled2 = [...row2, ...row2];
+// 4 copies → seamless, no visible seam even on wide screens
+const copies1 = [...row1, ...row1, ...row1, ...row1];
+const copies2 = [...row2, ...row2, ...row2, ...row2];
 
 export default function CreatorEarnings() {
   return (
@@ -83,21 +88,29 @@ export default function CreatorEarnings() {
       </motion.div>
 
       <div className="flex flex-col gap-4">
-        {/* Row 1 — scrolls left, very slowly */}
+        {/* Row 1 — scrolls left at 35s */}
         <div className="overflow-hidden w-full">
-          <div className="flex animate-marquee-left" style={{ width: "max-content" }}>
-            {doubled1.map((card, i) => (
-              <GreenCard key={i} {...card} />
-            ))}
+          <div
+            className="flex"
+            style={{
+              width: "max-content",
+              animation: "marquee-left 35s linear infinite",
+            }}
+          >
+            {copies1.map((card, i) => <GreenCard key={i} {...card} />)}
           </div>
         </div>
 
-        {/* Row 2 — scrolls right, very slowly */}
+        {/* Row 2 — scrolls right at 45s */}
         <div className="overflow-hidden w-full">
-          <div className="flex animate-marquee-right" style={{ width: "max-content" }}>
-            {doubled2.map((card, i) => (
-              <AmberCard key={i} {...card} />
-            ))}
+          <div
+            className="flex"
+            style={{
+              width: "max-content",
+              animation: "marquee-right 45s linear infinite",
+            }}
+          >
+            {copies2.map((card, i) => <AmberCard key={i} {...card} />)}
           </div>
         </div>
       </div>
