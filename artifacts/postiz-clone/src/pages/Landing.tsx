@@ -3,10 +3,10 @@ import TopBar from "@/components/TopBar";
 import Hero from "@/components/Hero";
 import ToggleSection from "@/components/ToggleSection";
 import AppPreview from "@/components/AppPreview";
+import CreatorEarnings from "@/components/CreatorEarnings";
 import AllTools from "@/components/AllTools";
 import PowerContent from "@/components/PowerContent";
 import SocialChannels from "@/components/SocialChannels";
-import MarqueeReviews from "@/components/MarqueeReviews";
 import Pricing from "@/components/Pricing";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
@@ -21,10 +21,10 @@ export default function Landing() {
         <Hero />
         <ToggleSection />
         <AppPreview />
+        <CreatorEarnings />
         <AllTools />
         <PowerContent />
         <SocialChannels />
-        <MarqueeReviews />
         <Pricing />
         <FinalCTA />
       </main>

@@ -218,12 +218,13 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Demo Video Section */}
+      {/* Animated Dashboard Mockup */}
       <div id="demo-video" className="w-full max-w-5xl mx-auto px-6 mt-20">
         <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
           className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/60 bg-[#0a0f0a]">
+
           {/* Browser chrome bar */}
-          <div className="flex items-center gap-2 px-4 py-3 bg-[#111] border-b border-white/5">
+          <div className="flex items-center gap-2 px-4 py-3 bg-[#0d0d0d] border-b border-white/5">
             <div className="flex gap-1.5">
               <div className="w-3 h-3 rounded-full bg-red-500/70" />
               <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
@@ -233,14 +234,138 @@ export default function Hero() {
               app.earnstack.in/dashboard
             </div>
           </div>
-          <video
-            src="/earnstack-demo.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full"
-          />
+
+          {/* Dashboard body */}
+          <div className="flex h-[480px]">
+            {/* Sidebar */}
+            <div className="w-14 shrink-0 bg-[#0a0f0a] border-r border-white/5 flex flex-col items-center py-4 gap-5">
+              <div className="w-8 h-8 rounded-lg bg-[#22c55e] flex items-center justify-center mb-2">
+                <img src="/earnstack-logo.png" alt="" className="w-6 h-6 object-contain" />
+              </div>
+              {[
+                <path key="grid" d="M3 3h7v7H3zm11 0h7v7h-7zM3 14h7v7H3zm11 0h7v7h-7z"/>,
+                <path key="bar" d="M18 20V10M12 20V4M6 20v-6"/>,
+                <path key="pkg" d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>,
+                <path key="users" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>,
+                <path key="bolt" d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>,
+              ].map((d, i) => (
+                <motion.div key={i} whileHover={{ scale: 1.1 }}
+                  className={`w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer transition-colors ${i === 0 ? "bg-[#22c55e]/20" : "hover:bg-white/5"}`}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke={i === 0 ? "#22c55e" : "#4b5563"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                    {d}
+                  </svg>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Main content */}
+            <div className="flex-1 overflow-hidden p-5 flex flex-col gap-4">
+
+              {/* Top heading */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-white font-bold text-sm">Dashboard</div>
+                  <div className="text-gray-500 text-xs">June 2026 · All products</div>
+                </div>
+                <motion.div whileHover={{ scale: 1.03 }}
+                  className="text-[10px] bg-[#22c55e] text-black font-bold px-3 py-1.5 rounded-full cursor-pointer">
+                  + New Product
+                </motion.div>
+              </div>
+
+              {/* Stat cards */}
+              <div className="grid grid-cols-4 gap-3">
+                {[
+                  { label: "Total Revenue", value: "₹18.4L", change: "+34%", color: "#22c55e", up: true },
+                  { label: "Products Sold", value: "3,241", change: "+18%", color: "#818cf8", up: true },
+                  { label: "Active Students", value: "12,890", change: "+52%", color: "#f59e0b", up: true },
+                  { label: "Avg. Order Value", value: "₹5,680", change: "+9%", color: "#34d399", up: true },
+                ].map((s, i) => (
+                  <motion.div key={s.label}
+                    initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ delay: 0.3 + i * 0.1 }}
+                    className="bg-[#111] border border-white/5 rounded-xl p-3">
+                    <div className="text-gray-500 text-[9px] mb-1 uppercase tracking-wide">{s.label}</div>
+                    <div className="text-white font-bold text-base mb-1">{s.value}</div>
+                    <div className="text-[10px] font-medium" style={{ color: s.color }}>↑ {s.change} this month</div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Chart + Recent Sales */}
+              <div className="flex gap-3 flex-1 min-h-0">
+                {/* Revenue Chart */}
+                <div className="flex-1 bg-[#111] border border-white/5 rounded-xl p-4 flex flex-col">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="text-white text-xs font-semibold">Revenue Chart</div>
+                    <div className="text-[#22c55e] text-[9px] font-medium">+38% vs last month</div>
+                  </div>
+                  {/* Animated bar chart */}
+                  <div className="flex-1 flex items-end gap-1.5 pb-2">
+                    {[55, 42, 68, 80, 58, 90, 73, 95, 62, 88, 76, 100].map((h, i) => (
+                      <motion.div key={i}
+                        initial={{ height: 0 }}
+                        whileInView={{ height: `${h}%` }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.5 + i * 0.06, duration: 0.5, ease: "easeOut" }}
+                        className="flex-1 rounded-sm"
+                        style={{
+                          background: i === 11
+                            ? "linear-gradient(to top, #22c55e, #4ade80)"
+                            : i > 8
+                            ? "rgba(34,197,94,0.4)"
+                            : "rgba(255,255,255,0.07)"
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <div className="flex justify-between text-[8px] text-gray-600 mt-1">
+                    {["Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr","May","Jun"].map(m => (
+                      <span key={m}>{m}</span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Recent Sales */}
+                <div className="w-44 bg-[#111] border border-white/5 rounded-xl p-3 flex flex-col">
+                  <div className="text-white text-xs font-semibold mb-3">Recent Sales</div>
+                  <div className="flex flex-col gap-2.5 overflow-hidden">
+                    {[
+                      { name: "Notion Masterclass", amt: "₹2,499", avatar: "NM", color: "#818cf8" },
+                      { name: "SEO Playbook PDF", amt: "₹799", avatar: "SP", color: "#f59e0b" },
+                      { name: "AI Tools Bundle", amt: "₹3,999", avatar: "AI", color: "#22c55e" },
+                      { name: "YouTube Course", amt: "₹1,999", avatar: "YT", color: "#f87171" },
+                      { name: "Email Templates", amt: "₹499", avatar: "ET", color: "#34d399" },
+                    ].map((s, i) => (
+                      <motion.div key={s.name}
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.6 + i * 0.12 }}
+                        className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-lg shrink-0 flex items-center justify-center text-[8px] font-bold text-black"
+                          style={{ background: s.color }}>
+                          {s.avatar}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-[9px] text-gray-300 truncate">{s.name}</div>
+                          <div className="text-[9px] font-bold text-white">{s.amt}</div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Live pulse indicator */}
+              <div className="flex items-center gap-2">
+                <motion.div animate={{ scale: [1, 1.4, 1], opacity: [0.7, 1, 0.7] }} transition={{ duration: 1.5, repeat: Infinity }}
+                  className="w-2 h-2 rounded-full bg-[#22c55e]" />
+                <span className="text-[10px] text-gray-500">Live data · updated just now</span>
+              </div>
+
+            </div>
+          </div>
         </motion.div>
       </div>
 
