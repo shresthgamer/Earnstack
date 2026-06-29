@@ -30,9 +30,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
           <Link href="/" className="flex items-center gap-2.5 shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-[#22c55e] flex items-center justify-center shrink-0">
-              <span className="text-black font-bold text-sm font-display">E</span>
-            </div>
+            <img src="/earnstack-logo.png" alt="EarnStack" className="w-8 h-8 object-contain" />
             <span className="font-display font-bold text-xl text-white tracking-tight">EarnStack</span>
           </Link>
 

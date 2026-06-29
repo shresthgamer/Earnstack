@@ -13,9 +13,7 @@ function PageLoader() {
   return (
     <div className="min-h-screen bg-[#0E0E0E] flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
-        <div className="w-10 h-10 rounded-xl bg-[#22c55e] flex items-center justify-center animate-pulse">
-          <span className="text-black font-bold text-lg font-display">E</span>
-        </div>
+        <img src="/earnstack-logo.png" alt="EarnStack" className="w-12 h-12 object-contain animate-pulse" />
         <div className="flex gap-1.5">
           {[0,1,2].map(i => (
             <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#22c55e]/60 animate-bounce"
