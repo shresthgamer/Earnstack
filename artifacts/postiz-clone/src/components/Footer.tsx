@@ -22,21 +22,27 @@ const navLinks = [
   {
     title: "Resources",
     links: [
-      { label: "Documentation", href: "#" },
-      { label: "Help Center", href: "#" },
-      { label: "API", href: "#" },
+      { label: "Help Center", href: "/help" },
       { label: "Blog", href: "/blog" },
+      { label: "Careers", href: "/careers" },
+      { label: "About", href: "/about" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "About", href: "#" },
-      { label: "Careers", href: "#" },
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms", href: "#" },
+      { label: "About Us", href: "/about" },
+      { label: "Careers", href: "/careers" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Service", href: "/terms" },
     ],
   },
+];
+
+const socials = [
+  { label: "𝕏", href: "https://twitter.com/earnstack", title: "X / Twitter" },
+  { label: "in", href: "https://linkedin.com/company/earnstack", title: "LinkedIn" },
+  { label: "▶", href: "https://youtube.com/@earnstack", title: "YouTube" },
 ];
 
 export default function Footer() {
@@ -48,19 +54,17 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-[#22c55e] flex items-center justify-center">
-                <span className="text-black font-bold text-sm font-display">E</span>
-              </div>
+              <img src="/earnstack-logo.png" alt="EarnStack" className="w-8 h-8 object-contain" />
               <span className="font-display font-bold text-xl text-white tracking-tight">EarnStack</span>
             </Link>
-            <p className="text-sm text-gray-400 mb-6 max-w-xs">
+            <p className="text-sm text-gray-400 mb-6 max-w-xs leading-relaxed">
               The all-in-one AI creator monetization platform. Turn your skills into income — products, courses, communities, and more.
             </p>
             <div className="flex gap-3">
-              {["X", "in", "yt"].map(s => (
-                <a key={s} href="#"
-                  className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-[#22c55e] transition-colors text-xs font-bold">
-                  {s}
+              {socials.map(s => (
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" title={s.title}
+                  className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-[#22c55e] hover:bg-[#22c55e]/10 transition-all text-xs font-bold">
+                  {s.label}
                 </a>
               ))}
             </div>
@@ -73,15 +77,9 @@ export default function Footer() {
               <ul className="space-y-3">
                 {col.links.map(({ label, href }) => (
                   <li key={label}>
-                    {href.startsWith("/") ? (
-                      <Link href={href} className="text-sm text-gray-400 hover:text-[#22c55e] transition-colors">
-                        {label}
-                      </Link>
-                    ) : (
-                      <a href={href} className="text-sm text-gray-400 hover:text-[#22c55e] transition-colors">
-                        {label}
-                      </a>
-                    )}
+                    <Link href={href} className="text-sm text-gray-400 hover:text-[#22c55e] transition-colors">
+                      {label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -92,12 +90,12 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-gray-500">© 2026 EarnStack. All rights reserved.</p>
+          <p className="text-sm text-gray-500">© 2026 EarnStack Technologies Pvt. Ltd. All rights reserved.</p>
           <div className="flex items-center gap-6 text-sm text-gray-600">
-            <a href="#" className="hover:text-gray-400 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-gray-400 transition-colors">Terms</a>
-            <a href="#" className="hover:text-gray-400 transition-colors">Help Center</a>
-            <a href="#" className="hover:text-gray-400 transition-colors">API</a>
+            <Link href="/privacy" className="hover:text-gray-400 transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-gray-400 transition-colors">Terms</Link>
+            <Link href="/help" className="hover:text-gray-400 transition-colors">Help Center</Link>
+            <a href="mailto:support@earnstack.in" className="hover:text-gray-400 transition-colors">Contact</a>
           </div>
         </div>
       </div>

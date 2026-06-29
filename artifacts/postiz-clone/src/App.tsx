@@ -1,13 +1,17 @@
 import { Component, Suspense, lazy, type ReactNode } from "react";
 import { Switch, Route, Router as WouterRouter } from "wouter";
 
-// Lazy-load every page so each route is its own JS chunk
-const Landing  = lazy(() => import("@/pages/Landing"));
-const Features = lazy(() => import("@/pages/Features"));
-const Pricing  = lazy(() => import("@/pages/Pricing"));
-const Blog     = lazy(() => import("@/pages/Blog"));
-const BlogPost = lazy(() => import("@/pages/BlogPost"));
-const AITools  = lazy(() => import("@/pages/AITools"));
+const Landing    = lazy(() => import("@/pages/Landing"));
+const Features   = lazy(() => import("@/pages/Features"));
+const Pricing    = lazy(() => import("@/pages/Pricing"));
+const Blog       = lazy(() => import("@/pages/Blog"));
+const BlogPost   = lazy(() => import("@/pages/BlogPost"));
+const AITools    = lazy(() => import("@/pages/AITools"));
+const About      = lazy(() => import("@/pages/About"));
+const Careers    = lazy(() => import("@/pages/Careers"));
+const Privacy    = lazy(() => import("@/pages/Privacy"));
+const Terms      = lazy(() => import("@/pages/Terms"));
+const HelpCenter = lazy(() => import("@/pages/HelpCenter"));
 
 function PageLoader() {
   return (
@@ -53,12 +57,17 @@ function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
-        <Route path="/"         component={Landing} />
-        <Route path="/features" component={Features} />
-        <Route path="/pricing"  component={Pricing} />
-        <Route path="/blog"     component={Blog} />
-        <Route path="/blog/:id" component={BlogPost} />
-        <Route path="/ai-tools" component={AITools} />
+        <Route path="/"           component={Landing} />
+        <Route path="/features"   component={Features} />
+        <Route path="/pricing"    component={Pricing} />
+        <Route path="/blog"       component={Blog} />
+        <Route path="/blog/:id"   component={BlogPost} />
+        <Route path="/ai-tools"   component={AITools} />
+        <Route path="/about"      component={About} />
+        <Route path="/careers"    component={Careers} />
+        <Route path="/privacy"    component={Privacy} />
+        <Route path="/terms"      component={Terms} />
+        <Route path="/help"       component={HelpCenter} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>
