@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import TopBar from "@/components/TopBar";
 import Hero from "@/components/Hero";
 import ToggleSection from "@/components/ToggleSection";
-import AppPreview from "@/components/AppPreview";
 import CreatorEarnings from "@/components/CreatorEarnings";
 import AllTools from "@/components/AllTools";
 import PowerContent from "@/components/PowerContent";
@@ -20,7 +19,6 @@ export default function Landing() {
       <main className="flex flex-col w-full">
         <Hero />
         <ToggleSection />
-        <AppPreview />
         <CreatorEarnings />
         <AllTools />
         <PowerContent />
