@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Eye, EyeOff, Check, Loader2, Mail, Lock, User, AlertCircle } from "lucide-react";
+import {
+  X, Eye, EyeOff, Check, Loader2, Mail, Lock, User,
+  AlertCircle, ShieldCheck, Zap, TrendingUp,
+} from "lucide-react";
 
 interface SignUpModalProps {
   isOpen: boolean;
@@ -10,23 +13,140 @@ interface SignUpModalProps {
 
 type Step = "form" | "success";
 
+const SOCIAL_PROOF = [
+  { icon: <Zap size={13} />, text: "2 min setup — no credit card" },
+  { icon: <ShieldCheck size={13} />, text: "256-bit encryption" },
+  { icon: <TrendingUp size={13} />, text: "Trusted by 50,000+ creators" },
+];
+
+function StrengthBar({ password }: { password: string }) {
+  const score = (() => {
+    if (!password) return 0;
+    let s = 0;
+    if (password.length >= 8) s++;
+    if (password.length >= 12) s++;
+    if (/[A-Z]/.test(password)) s++;
+    if (/[0-9]/.test(password)) s++;
+    if (/[^A-Za-z0-9]/.test(password)) s++;
+    return s;
+  })();
+  const label = ["", "Weak", "Fair", "Good", "Strong", "Very Strong"][score];
+  const color = ["", "#ef4444", "#f59e0b", "#eab308", "#22c55e", "#16a34a"][score];
+  if (!password) return null;
+  return (
+    <div className="mt-2.5">
+      <div className="flex gap-1 mb-1.5">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <div
+            key={i}
+            className="flex-1 h-1 rounded-full transition-all duration-400"
+            style={{ background: i <= score ? color : "rgba(255,255,255,0.08)" }}
+          />
+        ))}
+      </div>
+      <div className="flex justify-between items-center">
+        <p className="text-xs font-medium" style={{ color }}>{label}</p>
+        {score < 3 && (
+          <p className="text-xs text-gray-600">Add uppercase, numbers, symbols</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+interface FieldProps {
+  label: string;
+  icon: React.ReactNode;
+  error?: string;
+  hint?: string;
+  children: React.ReactNode;
+  success?: boolean;
+}
+
+function Field({ label, icon, error, hint, children, success }: FieldProps) {
+  const borderClass = error
+    ? "border-red-500/50 bg-red-500/5"
+    : success
+    ? "border-[#22c55e]/40 bg-[#22c55e]/5"
+    : "border-white/10 bg-white/5 focus-within:border-[#22c55e]/50 focus-within:bg-white/7";
+
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-300 mb-1.5">{label}</label>
+      <div className={`flex items-center gap-3 border rounded-xl px-4 py-3 transition-all duration-200 ${borderClass}`}>
+        <span className={`shrink-0 transition-colors ${error ? "text-red-400" : success ? "text-[#22c55e]" : "text-gray-500"}`}>
+          {success ? <Check size={16} strokeWidth={2.5} /> : icon}
+        </span>
+        {children}
+      </div>
+      <AnimatePresence mode="wait">
+        {error ? (
+          <motion.p key="err" initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+            className="text-xs text-red-400 mt-1.5 flex items-center gap-1">
+            <AlertCircle size={11} /> {error}
+          </motion.p>
+        ) : hint ? (
+          <motion.p key="hint" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            className="text-xs text-gray-600 mt-1.5">{hint}</motion.p>
+        ) : null}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export default function SignUpModal({ isOpen, onClose, source = "website" }: SignUpModalProps) {
   const [step, setStep] = useState<Step>("form");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const clearField = (field: string) =>
+    setFieldErrors((f) => ({ ...f, [field]: "" }));
+
+  const touch = (field: string) =>
+    setTouched((t) => ({ ...t, [field]: true }));
+
+  const validateField = (field: string, value: string | boolean): string => {
+    switch (field) {
+      case "name":
+        return typeof value === "string" && value.trim().length >= 2 ? "" : "Enter your full name (min. 2 chars)";
+      case "email":
+        return typeof value === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? "" : "Enter a valid email address";
+      case "password":
+        return typeof value === "string" && value.length >= 8 ? "" : "Password must be at least 8 characters";
+      case "confirmPassword":
+        return value === password ? "" : "Passwords do not match";
+      case "agreed":
+        return value ? "" : "Please accept the terms to continue";
+      default:
+        return "";
+    }
+  };
+
+  const handleBlur = (field: string, value: string | boolean) => {
+    touch(field);
+    const err = validateField(field, value);
+    setFieldErrors((f) => ({ ...f, [field]: err }));
+  };
 
   const validate = () => {
+    const fields: Record<string, string | boolean> = {
+      name, email, password, confirmPassword, agreed,
+    };
     const errors: Record<string, string> = {};
-    if (!name.trim() || name.trim().length < 2) errors.name = "Enter your full name";
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = "Enter a valid email address";
-    if (!password || password.length < 8) errors.password = "Password must be at least 8 characters";
-    if (!agreed) errors.agreed = "Please accept the terms to continue";
+    for (const [field, value] of Object.entries(fields)) {
+      const err = validateField(field, value);
+      if (err) errors[field] = err;
+    }
     return errors;
   };
 
@@ -35,6 +155,7 @@ export default function SignUpModal({ isOpen, onClose, source = "website" }: Sig
     setError(null);
     const errors = validate();
     setFieldErrors(errors);
+    setTouched({ name: true, email: true, password: true, confirmPassword: true, agreed: true });
     if (Object.keys(errors).length > 0) return;
 
     setLoading(true);
@@ -61,25 +182,13 @@ export default function SignUpModal({ isOpen, onClose, source = "website" }: Sig
     onClose();
     setTimeout(() => {
       setStep("form");
-      setName(""); setEmail(""); setPassword("");
-      setShowPassword(false); setAgreed(false);
-      setError(null); setFieldErrors({});
+      setName(""); setEmail(""); setPassword(""); setConfirmPassword("");
+      setShowPassword(false); setShowConfirm(false); setAgreed(false);
+      setError(null); setFieldErrors({}); setTouched({});
     }, 300);
   };
 
-  const passwordStrength = (() => {
-    if (!password) return 0;
-    let score = 0;
-    if (password.length >= 8) score++;
-    if (password.length >= 12) score++;
-    if (/[A-Z]/.test(password)) score++;
-    if (/[0-9]/.test(password)) score++;
-    if (/[^A-Za-z0-9]/.test(password)) score++;
-    return score;
-  })();
-
-  const strengthLabel = ["", "Weak", "Fair", "Good", "Strong", "Very Strong"][passwordStrength];
-  const strengthColor = ["", "#ef4444", "#f59e0b", "#eab308", "#22c55e", "#16a34a"][passwordStrength];
+  const confirmOk = confirmPassword.length > 0 && confirmPassword === password;
 
   return (
     <AnimatePresence>
@@ -88,28 +197,28 @@ export default function SignUpModal({ isOpen, onClose, source = "website" }: Sig
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center px-4"
+          className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8"
           onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
         >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            initial={{ opacity: 0, scale: 0.93, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92, y: 20 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-md bg-[#111] border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+            exit={{ opacity: 0, scale: 0.93, y: 24 }}
+            transition={{ type: "spring", damping: 26, stiffness: 320 }}
+            className="relative w-full max-w-[440px] bg-[#111] border border-white/10 rounded-2xl shadow-[0_32px_80px_rgba(0,0,0,0.6)] overflow-hidden"
           >
-            {/* Green glow at top */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-24 bg-[#22c55e]/10 rounded-full blur-3xl pointer-events-none" />
+            {/* Decorative top glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-20 bg-[#22c55e]/8 rounded-full blur-3xl pointer-events-none" />
+            {/* Top accent line */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#22c55e]/40 to-transparent" />
 
-            {/* Close button */}
             <button
               onClick={handleClose}
-              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition-all"
+              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white/5 hover:bg-white/12 flex items-center justify-center text-white/40 hover:text-white transition-all"
             >
-              <X size={16} />
+              <X size={15} />
             </button>
 
             <AnimatePresence mode="wait">
@@ -118,118 +227,150 @@ export default function SignUpModal({ isOpen, onClose, source = "website" }: Sig
                   key="form"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="p-8"
+                  exit={{ opacity: 0, x: -20 }}
+                  className="p-7"
                 >
                   {/* Header */}
-                  <div className="text-center mb-7">
-                    <div className="w-12 h-12 rounded-xl bg-[#22c55e]/15 border border-[#22c55e]/20 flex items-center justify-center mx-auto mb-4">
-                      <img src="/earnstack-logo.png" alt="EarnStack" className="w-7 h-7 object-contain" />
+                  <div className="text-center mb-6">
+                    <div className="w-11 h-11 rounded-xl bg-[#22c55e]/12 border border-[#22c55e]/20 flex items-center justify-center mx-auto mb-4">
+                      <img src="/earnstack-logo.png" alt="EarnStack" className="w-6 h-6 object-contain" />
                     </div>
-                    <h2 className="text-2xl font-bold text-white mb-1.5">Create your account</h2>
-                    <p className="text-sm text-gray-400">Join 50,000+ creators on EarnStack</p>
+                    <h2 className="text-[22px] font-bold text-white mb-1">Create your free account</h2>
+                    <p className="text-sm text-gray-500">Start building your creator business today</p>
+                  </div>
+
+                  {/* Social proof pills */}
+                  <div className="flex flex-wrap justify-center gap-2 mb-6">
+                    {SOCIAL_PROOF.map(({ icon, text }) => (
+                      <div key={text} className="flex items-center gap-1.5 bg-white/4 border border-white/8 rounded-full px-3 py-1 text-xs text-gray-400">
+                        <span className="text-[#22c55e]">{icon}</span>
+                        {text}
+                      </div>
+                    ))}
                   </div>
 
                   {/* Global error */}
                   <AnimatePresence>
                     {error && (
                       <motion.div
-                        initial={{ opacity: 0, y: -8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        className="flex items-start gap-2.5 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 mb-5"
+                        initial={{ opacity: 0, y: -8, height: 0 }}
+                        animate={{ opacity: 1, y: 0, height: "auto" }}
+                        exit={{ opacity: 0, y: -8, height: 0 }}
+                        className="flex items-start gap-2.5 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 mb-5 overflow-hidden"
                       >
-                        <AlertCircle size={16} className="text-red-400 mt-0.5 shrink-0" />
+                        <AlertCircle size={15} className="text-red-400 mt-0.5 shrink-0" />
                         <p className="text-sm text-red-400">{error}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>
 
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                  <form ref={formRef} onSubmit={handleSubmit} noValidate className="flex flex-col gap-3.5">
                     {/* Name */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-1.5">Full name</label>
-                      <div className={`flex items-center gap-3 bg-white/5 border rounded-xl px-4 py-3 transition-colors ${fieldErrors.name ? "border-red-500/50" : "border-white/10 focus-within:border-[#22c55e]/50"}`}>
-                        <User size={16} className="text-gray-500 shrink-0" />
-                        <input
-                          type="text"
-                          value={name}
-                          onChange={(e) => { setName(e.target.value); setFieldErrors(f => ({ ...f, name: "" })); }}
-                          placeholder="Alex Johnson"
-                          className="flex-1 bg-transparent text-white placeholder:text-gray-600 text-sm outline-none"
-                          autoComplete="name"
-                        />
-                      </div>
-                      {fieldErrors.name && <p className="text-xs text-red-400 mt-1.5">{fieldErrors.name}</p>}
-                    </div>
+                    <Field
+                      label="Full name"
+                      icon={<User size={15} />}
+                      error={touched.name ? fieldErrors.name : undefined}
+                      success={touched.name && !fieldErrors.name && name.trim().length >= 2}
+                    >
+                      <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => { setName(e.target.value); clearField("name"); }}
+                        onBlur={() => handleBlur("name", name)}
+                        placeholder="Alex Johnson"
+                        className="flex-1 bg-transparent text-white placeholder:text-gray-600 text-sm outline-none"
+                        autoComplete="name"
+                      />
+                    </Field>
 
                     {/* Email */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-1.5">Email address</label>
-                      <div className={`flex items-center gap-3 bg-white/5 border rounded-xl px-4 py-3 transition-colors ${fieldErrors.email ? "border-red-500/50" : "border-white/10 focus-within:border-[#22c55e]/50"}`}>
-                        <Mail size={16} className="text-gray-500 shrink-0" />
-                        <input
-                          type="email"
-                          value={email}
-                          onChange={(e) => { setEmail(e.target.value); setFieldErrors(f => ({ ...f, email: "" })); }}
-                          placeholder="alex@example.com"
-                          className="flex-1 bg-transparent text-white placeholder:text-gray-600 text-sm outline-none"
-                          autoComplete="email"
-                        />
-                      </div>
-                      {fieldErrors.email && <p className="text-xs text-red-400 mt-1.5">{fieldErrors.email}</p>}
-                    </div>
+                    <Field
+                      label="Email address"
+                      icon={<Mail size={15} />}
+                      error={touched.email ? fieldErrors.email : undefined}
+                      success={touched.email && !fieldErrors.email && email.length > 0}
+                    >
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => { setEmail(e.target.value); clearField("email"); }}
+                        onBlur={() => handleBlur("email", email)}
+                        placeholder="alex@example.com"
+                        className="flex-1 bg-transparent text-white placeholder:text-gray-600 text-sm outline-none"
+                        autoComplete="email"
+                      />
+                    </Field>
 
                     {/* Password */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-1.5">Password</label>
-                      <div className={`flex items-center gap-3 bg-white/5 border rounded-xl px-4 py-3 transition-colors ${fieldErrors.password ? "border-red-500/50" : "border-white/10 focus-within:border-[#22c55e]/50"}`}>
-                        <Lock size={16} className="text-gray-500 shrink-0" />
-                        <input
-                          type={showPassword ? "text" : "password"}
-                          value={password}
-                          onChange={(e) => { setPassword(e.target.value); setFieldErrors(f => ({ ...f, password: "" })); }}
-                          placeholder="Min. 8 characters"
-                          className="flex-1 bg-transparent text-white placeholder:text-gray-600 text-sm outline-none"
-                          autoComplete="new-password"
-                        />
-                        <button type="button" onClick={() => setShowPassword(v => !v)} className="text-gray-500 hover:text-gray-300 transition-colors">
-                          {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
-                        </button>
-                      </div>
-                      {fieldErrors.password && <p className="text-xs text-red-400 mt-1.5">{fieldErrors.password}</p>}
+                    <Field
+                      label="Password"
+                      icon={<Lock size={15} />}
+                      error={touched.password ? fieldErrors.password : undefined}
+                      hint={!touched.password ? "Min. 8 characters" : undefined}
+                      success={touched.password && !fieldErrors.password && password.length >= 8}
+                    >
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        onChange={(e) => { setPassword(e.target.value); clearField("password"); if (confirmPassword) handleBlur("confirmPassword", confirmPassword); }}
+                        onBlur={() => handleBlur("password", password)}
+                        placeholder="Min. 8 characters"
+                        className="flex-1 bg-transparent text-white placeholder:text-gray-600 text-sm outline-none"
+                        autoComplete="new-password"
+                      />
+                      <button type="button" onClick={() => setShowPassword((v) => !v)}
+                        className="text-gray-500 hover:text-gray-300 transition-colors shrink-0">
+                        {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
+                      </button>
+                    </Field>
+                    <StrengthBar password={password} />
 
-                      {/* Strength bar */}
-                      {password && (
-                        <div className="mt-2">
-                          <div className="flex gap-1 mb-1">
-                            {[1, 2, 3, 4, 5].map((i) => (
-                              <div key={i} className="flex-1 h-1 rounded-full transition-all duration-300"
-                                style={{ background: i <= passwordStrength ? strengthColor : "rgba(255,255,255,0.08)" }} />
-                            ))}
-                          </div>
-                          <p className="text-xs" style={{ color: strengthColor }}>{strengthLabel}</p>
-                        </div>
-                      )}
-                    </div>
+                    {/* Confirm Password */}
+                    <Field
+                      label="Confirm password"
+                      icon={<Lock size={15} />}
+                      error={touched.confirmPassword ? fieldErrors.confirmPassword : undefined}
+                      success={confirmOk}
+                    >
+                      <input
+                        type={showConfirm ? "text" : "password"}
+                        value={confirmPassword}
+                        onChange={(e) => { setConfirmPassword(e.target.value); clearField("confirmPassword"); }}
+                        onBlur={() => handleBlur("confirmPassword", confirmPassword)}
+                        placeholder="Re-enter your password"
+                        className="flex-1 bg-transparent text-white placeholder:text-gray-600 text-sm outline-none"
+                        autoComplete="new-password"
+                      />
+                      <button type="button" onClick={() => setShowConfirm((v) => !v)}
+                        className="text-gray-500 hover:text-gray-300 transition-colors shrink-0">
+                        {showConfirm ? <EyeOff size={14} /> : <Eye size={14} />}
+                      </button>
+                    </Field>
 
                     {/* Terms */}
-                    <div>
+                    <div className="pt-0.5">
                       <label className="flex items-start gap-3 cursor-pointer group">
-                        <div
-                          onClick={() => { setAgreed(v => !v); setFieldErrors(f => ({ ...f, agreed: "" })); }}
-                          className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 mt-0.5 transition-all ${agreed ? "bg-[#22c55e] border-[#22c55e]" : "border-white/20 bg-white/5 group-hover:border-white/40"}`}
+                        <button
+                          type="button"
+                          onClick={() => { setAgreed((v) => !v); handleBlur("agreed", !agreed); }}
+                          className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 mt-0.5 transition-all ${
+                            agreed ? "bg-[#22c55e] border-[#22c55e]" : `border-white/20 bg-white/5 group-hover:border-white/40 ${fieldErrors.agreed && touched.agreed ? "border-red-500/50" : ""}`
+                          }`}
                         >
-                          {agreed && <Check size={12} className="text-black" strokeWidth={3} />}
-                        </div>
-                        <span className="text-sm text-gray-400 leading-relaxed">
+                          {agreed && <Check size={11} className="text-black" strokeWidth={3} />}
+                        </button>
+                        <span className="text-[13px] text-gray-400 leading-relaxed">
                           I agree to the{" "}
                           <a href="/terms" className="text-[#22c55e] hover:underline" target="_blank">Terms of Service</a>
                           {" "}and{" "}
                           <a href="/privacy" className="text-[#22c55e] hover:underline" target="_blank">Privacy Policy</a>
                         </span>
                       </label>
-                      {fieldErrors.agreed && <p className="text-xs text-red-400 mt-1.5">{fieldErrors.agreed}</p>}
+                      {fieldErrors.agreed && touched.agreed && (
+                        <p className="text-xs text-red-400 mt-1.5 flex items-center gap-1">
+                          <AlertCircle size={11} /> {fieldErrors.agreed}
+                        </p>
+                      )}
                     </div>
 
                     {/* Submit */}
@@ -238,82 +379,80 @@ export default function SignUpModal({ isOpen, onClose, source = "website" }: Sig
                       disabled={loading}
                       whileHover={!loading ? { scale: 1.02 } : {}}
                       whileTap={!loading ? { scale: 0.98 } : {}}
-                      className="w-full bg-[#22c55e] hover:bg-[#16a34a] disabled:opacity-60 disabled:cursor-not-allowed text-black font-bold py-3.5 rounded-xl text-sm transition-colors flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(34,197,94,0.25)]"
+                      className="w-full bg-[#22c55e] hover:bg-[#16a34a] disabled:opacity-60 disabled:cursor-not-allowed text-black font-bold py-3.5 rounded-xl text-sm transition-colors flex items-center justify-center gap-2 shadow-[0_0_24px_rgba(34,197,94,0.22)] mt-1"
                     >
                       {loading ? (
-                        <><Loader2 size={16} className="animate-spin" /> Creating account…</>
+                        <><Loader2 size={15} className="animate-spin" /> Creating your account…</>
                       ) : (
-                        "Create Free Account"
+                        "Create Free Account →"
                       )}
                     </motion.button>
                   </form>
 
-                  <p className="text-center text-xs text-gray-600 mt-5">
-                    No credit card required · Cancel anytime
+                  <p className="text-center text-[11px] text-gray-600 mt-4">
+                    No credit card required · Cancel anytime · Free forever plan
                   </p>
                 </motion.div>
               ) : (
                 <motion.div
                   key="success"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
                   className="p-8 flex flex-col items-center text-center"
                 >
-                  {/* Success ring animation */}
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    transition={{ type: "spring", damping: 15, stiffness: 200, delay: 0.1 }}
-                    className="w-20 h-20 rounded-full bg-[#22c55e]/15 border-2 border-[#22c55e] flex items-center justify-center mb-6 relative"
+                    transition={{ type: "spring", damping: 14, stiffness: 220, delay: 0.05 }}
+                    className="w-20 h-20 rounded-full bg-[#22c55e]/12 border-2 border-[#22c55e] flex items-center justify-center mb-5 relative"
                   >
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.25, type: "spring" }}
-                    >
-                      <Check size={36} className="text-[#22c55e]" strokeWidth={2.5} />
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: "spring" }}>
+                      <Check size={34} className="text-[#22c55e]" strokeWidth={2.5} />
                     </motion.div>
-                    {/* Ping effect */}
                     <motion.div
-                      animate={{ scale: [1, 1.6], opacity: [0.4, 0] }}
-                      transition={{ duration: 1.2, repeat: Infinity }}
+                      animate={{ scale: [1, 1.7], opacity: [0.5, 0] }}
+                      transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
                       className="absolute inset-0 rounded-full border-2 border-[#22c55e]"
                     />
                   </motion.div>
 
-                  <motion.h2
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="text-2xl font-bold text-white mb-2"
-                  >
+                  <motion.h2 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
+                    className="text-2xl font-bold text-white mb-2">
                     You're in! 🎉
                   </motion.h2>
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="text-gray-400 text-sm mb-2"
-                  >
-                    Welcome to EarnStack, <span className="text-white font-medium">{name}</span>!
+                  <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}
+                    className="text-gray-400 text-sm mb-1">
+                    Welcome to EarnStack, <span className="text-white font-semibold">{name}</span>!
                   </motion.p>
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="text-gray-500 text-xs mb-8"
-                  >
-                    A confirmation has been sent to <span className="text-gray-300">{email}</span>
+                  <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.42 }}
+                    className="text-gray-600 text-xs mb-7">
+                    Account created for <span className="text-gray-400">{email}</span>
                   </motion.p>
 
+                  {/* What's next checklist */}
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+                    className="w-full bg-white/4 border border-white/8 rounded-xl p-4 mb-6 text-left space-y-2.5">
+                    {[
+                      "Set up your creator profile",
+                      "Create your first digital product",
+                      "Launch your AI-powered funnel",
+                    ].map((item, i) => (
+                      <motion.div key={item} className="flex items-center gap-3"
+                        initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.55 + i * 0.08 }}>
+                        <div className="w-5 h-5 rounded-full bg-[#22c55e]/15 border border-[#22c55e]/30 flex items-center justify-center shrink-0">
+                          <Check size={10} className="text-[#22c55e]" strokeWidth={3} />
+                        </div>
+                        <span className="text-sm text-gray-300">{item}</span>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+
                   <motion.button
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
+                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
                     onClick={handleClose}
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="bg-[#22c55e] hover:bg-[#16a34a] text-black font-bold px-8 py-3 rounded-xl text-sm transition-colors"
+                    whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                    className="w-full bg-[#22c55e] hover:bg-[#16a34a] text-black font-bold px-8 py-3.5 rounded-xl text-sm transition-colors shadow-[0_0_24px_rgba(34,197,94,0.22)]"
                   >
                     Get Started →
                   </motion.button>

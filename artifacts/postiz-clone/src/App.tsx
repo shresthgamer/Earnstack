@@ -13,6 +13,7 @@ const Careers    = lazy(() => import("@/pages/Careers"));
 const Privacy    = lazy(() => import("@/pages/Privacy"));
 const Terms      = lazy(() => import("@/pages/Terms"));
 const HelpCenter = lazy(() => import("@/pages/HelpCenter"));
+const Admin      = lazy(() => import("@/pages/Admin"));
 
 function PageLoader() {
   return (
@@ -69,6 +70,7 @@ function Router() {
         <Route path="/privacy"    component={Privacy} />
         <Route path="/terms"      component={Terms} />
         <Route path="/help"       component={HelpCenter} />
+        <Route path="/admin"      component={Admin} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>
