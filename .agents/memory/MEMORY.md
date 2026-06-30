@@ -1,0 +1,1 @@
+- [EarnStack run preference](earnstack-run.md) — "run website" always means EarnStack Website (@workspace/postiz-clone), never a separate service.

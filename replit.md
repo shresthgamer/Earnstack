@@ -1,44 +1,64 @@
-# [Project name]
+# EarnStack Website
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+An AI creator monetization platform website built with React + Vite + Tailwind CSS + Framer Motion. Dark theme, green accent, includes Landing, Features, AI Tools, Pricing, Blog, and more pages.
+
+## ⚠️ IMPORTANT — Always Run This
+
+**When asked to "run the website", always run the EarnStack Website (`@workspace/postiz-clone`), NOT the "Start application" workflow or any other service.**
+
+The one and only website to run:
+```bash
+PORT=5000 BASE_PATH=/ pnpm --filter @workspace/postiz-clone run dev
+```
+
+This is configured as the **"Start application"** workflow in Replit and serves on port 5000.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `PORT=5000 BASE_PATH=/ pnpm --filter @workspace/postiz-clone run dev` — **run the EarnStack website** (port 5000) ← the main command
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
 - Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
+- Frontend: React 19, Vite, Tailwind CSS v4, Framer Motion, Wouter (routing)
 - DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/postiz-clone/` — the EarnStack website (the only site to run)
+  - `src/pages/` — all pages: Landing, Features, Pricing, Blog, AITools, About, Careers, Privacy, Terms, HelpCenter
+  - `src/components/` — reusable UI components (Navbar, Footer, etc.)
+  - `vite.config.ts` — Vite configuration (port 5000, host 0.0.0.0)
+- `lib/db/` — PostgreSQL + Drizzle schema
+- `artifacts/api-server/` — Express API server (not needed to run the website)
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Single-page React app using Wouter for client-side routing.
+- Tailwind CSS v4 with green (#22c55e) accent on dark (#0e0e0e) background.
+- All pages are lazy-loaded for fast initial load.
+- Vite dev server runs on port 5000 with `host: "0.0.0.0"` and `allowedHosts: true` for Replit proxy compatibility.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+EarnStack is a creator monetization platform landing site. Pages: Home, Features, AI Tools, Pricing, Blog, About, Careers, Privacy, Terms, Help Center.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- **"Run the website" always means running the EarnStack Website (`@workspace/postiz-clone`) on port 5000.**
+- **Never run "Start application" as a separate entity — it IS the EarnStack website.**
+- The canvas should show only the EarnStack Website frame, not multiple duplicate frames.
+- Do not run the API server unless explicitly asked.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- The project is a pnpm monorepo. Always use `pnpm --filter @workspace/postiz-clone` to target the website.
+- Port 5000 is required for the Replit webview proxy (maps to external port 80).
+- `strictPort: true` is set in vite.config.ts — Vite will error if port 5000 is taken.
 
 ## Pointers
 
