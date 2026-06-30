@@ -1,7 +1,6 @@
 import { Component, Suspense, lazy, type ReactNode } from "react";
 import { Switch, Route, Router as WouterRouter } from "wouter";
 
-const Dashboard  = lazy(() => import("@/pages/Dashboard"));
 const Landing    = lazy(() => import("@/pages/Landing"));
 const Features   = lazy(() => import("@/pages/Features"));
 const Pricing    = lazy(() => import("@/pages/Pricing"));
@@ -58,8 +57,7 @@ function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
-        <Route path="/"           component={Dashboard} />
-        <Route path="/landing"    component={Landing} />
+        <Route path="/"           component={Landing} />
         <Route path="/features"   component={Features} />
         <Route path="/pricing"    component={Pricing} />
         <Route path="/blog"       component={Blog} />
