@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "wouter";
 import { Menu, X, ArrowRight } from "lucide-react";
+import { useSignUp } from "@/context/SignUpContext";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -14,6 +15,7 @@ const navItems = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [location] = useLocation();
+  const { openSignUp } = useSignUp();
 
   // Close mobile menu on route change
   useEffect(() => { setOpen(false); }, [location]);
@@ -54,17 +56,16 @@ export default function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <Link href="#" className="text-sm font-medium text-white hover:text-[#22c55e] transition-colors">
+            <button className="text-sm font-medium text-white hover:text-[#22c55e] transition-colors">
               Login
-            </Link>
-            <Link href="/pricing">
-              <motion.button
-                whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                className="bg-[#22c55e] text-black text-sm font-bold px-4 py-2 rounded-full hover:bg-[#16a34a] transition-colors flex items-center gap-1.5"
-              >
-                Start Free <ArrowRight size={13} />
-              </motion.button>
-            </Link>
+            </button>
+            <motion.button
+              onClick={() => openSignUp("navbar")}
+              whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+              className="bg-[#22c55e] text-black text-sm font-bold px-4 py-2 rounded-full hover:bg-[#16a34a] transition-colors flex items-center gap-1.5"
+            >
+              Start Free <ArrowRight size={13} />
+            </motion.button>
           </div>
 
           {/* Mobile hamburger */}
@@ -128,17 +129,16 @@ export default function Navbar() {
               </nav>
 
               <div className="mt-auto p-6 border-t border-white/5 flex flex-col gap-3">
-                <Link href="#" className="text-center py-2.5 text-sm font-medium text-gray-300 hover:text-white transition-colors">
+                <button className="text-center py-2.5 text-sm font-medium text-gray-300 hover:text-white transition-colors">
                   Login
-                </Link>
-                <Link href="/pricing">
-                  <motion.button
-                    whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                    className="w-full bg-[#22c55e] text-black text-sm font-bold py-3 rounded-full hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2"
-                  >
-                    Start Free <ArrowRight size={14} />
-                  </motion.button>
-                </Link>
+                </button>
+                <motion.button
+                  onClick={() => { setOpen(false); openSignUp("navbar-mobile"); }}
+                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                  className="w-full bg-[#22c55e] text-black text-sm font-bold py-3 rounded-full hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2"
+                >
+                  Start Free <ArrowRight size={14} />
+                </motion.button>
               </div>
             </motion.div>
           </>

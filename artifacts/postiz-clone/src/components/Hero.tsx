@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
+import { useSignUp } from "@/context/SignUpContext";
 import {
   SiStripe, SiPaypal, SiZoom, SiYoutube, SiZapier,
   SiGoogleanalytics, SiGoogledrive, SiGooglecalendar,
@@ -109,6 +110,7 @@ function FloatingCard({ card }: { card: typeof floatingCards[0] }) {
 }
 
 export default function Hero() {
+  const { openSignUp } = useSignUp();
   return (
     <section className="relative w-full pt-24 pb-16 overflow-hidden flex flex-col items-center">
 
@@ -178,15 +180,14 @@ export default function Hero() {
 
           {/* CTAs */}
           <motion.div variants={itemVars} className="flex flex-wrap gap-4 justify-center mb-16">
-            <Link href="/pricing">
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="bg-[#22c55e] text-black text-lg font-bold px-8 py-4 rounded-full hover:bg-[#16a34a] transition-colors shadow-[0_0_30px_rgba(34,197,94,0.3)] flex items-center gap-2"
-              >
-                Start Free <ArrowRight size={18} />
-              </motion.button>
-            </Link>
+            <motion.button
+              onClick={() => openSignUp("hero")}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="bg-[#22c55e] text-black text-lg font-bold px-8 py-4 rounded-full hover:bg-[#16a34a] transition-colors shadow-[0_0_30px_rgba(34,197,94,0.3)] flex items-center gap-2"
+            >
+              Start Free <ArrowRight size={18} />
+            </motion.button>
             <a href="#demo-video">
               <motion.button
                 whileHover={{ scale: 1.03 }}

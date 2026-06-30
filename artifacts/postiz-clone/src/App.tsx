@@ -1,4 +1,5 @@
 import { Component, Suspense, lazy, type ReactNode } from "react";
+import { SignUpProvider } from "@/context/SignUpContext";
 import { Switch, Route, Router as WouterRouter } from "wouter";
 
 const Landing    = lazy(() => import("@/pages/Landing"));
@@ -78,7 +79,9 @@ export default function App() {
   return (
     <ErrorBoundary>
       <WouterRouter base={import.meta.env.BASE_URL?.replace(/\/$/, "") ?? ""}>
-        <Router />
+        <SignUpProvider>
+          <Router />
+        </SignUpProvider>
       </WouterRouter>
     </ErrorBoundary>
   );
